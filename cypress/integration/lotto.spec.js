@@ -4,24 +4,104 @@ describe("lotto-domain-test", () => {
   });
 
   // key event
-  it("가장 처음 0 입력 시 값이 입력되지 않는다. ", () => {});
-  it("input창에 문자열 입력 시 값이 입력되지 않는다. ", () => {});
-  it("input창에 특수문자 입력 시 값이 입력되지 않는다. ", () => {});
+  it("가장 처음 0 입력 시 값이 입력되지 않는다. ", () => {
+    cy.get("#purchase-form-input").type(0);
+    cy.get("#purchase-form-input").should("have.value", "");
+  });
+  it("input창에 문자열 입력 시 값이 입력되지 않는다. ", () => {
+    cy.get("#purchase-form-input").type("a");
+    cy.get("#purchase-form-input").should("have.value", "");
+  });
+  it("input창에 특수문자 입력 시 값이 입력되지 않는다. ", () => {
+    cy.get("#purchase-form-input").type("-");
+    cy.get("#purchase-form-input").should("have.value", "");
+  });
 
-  it("엔터 키 입력 시 로또 구입 금액이 1000 단위가 아닌 경우 alert 경고를 띄운다. ", () => {});
-  it("엔터 키 입력 시 로또 구입 금액이 1000 단위가 아닌 경우 input값을 비운다. ", () => {});
+  it("엔터 키 입력 시 로또 구입 금액이 1000 단위가 아닌 경우 alert 경고를 띄운다. ", () => {
+    const stub = cy.stub();
+    cy.on("window:alert", stub);
 
-  it("엔터 키 입력 시 로또 UI의 <label>에 로또 구입 금액의 1000 단위 개수를 띄운다.", () => {});
+    cy.get("#purchase-form-input")
+      .type("1100{enter}")
+      .then(() => {
+        expect(stub.getCall(0)).to.be.calledWith(
+          "로또 구입 금액을 1,000원 단위로 입력해 주세요."
+        );
+      });
+  });
+  it("엔터 키 입력 시 로또 구입 금액이 1000 단위가 아닌 경우 input값을 비운다. ", () => {
+    cy.get("#purchase-form-input")
+      .type("1100{enter}")
+      .then(() => {
+        expect(cy.get("#purchase-form-input").should("have.value", ""));
+      });
+  });
 
-  it("엔터 키 입력 시 로또 <span> UI의 당첨 번호 숫자 6개가 지정된다. ", () => {});
+  it("엔터 키 입력 시 로또 UI의 <label>에 로또 구입 금액의 1000 단위 개수를 띄운다.", () => {
+    cy.get("#purchase-form-input").type(10000`{enter}`);
+    cy.get("#purchase-section-label").should(
+      "have.text",
+      "총 10개를 구매하였습니다."
+    );
+  });
+  // it("엔터 키 입력 시 1100 입력한 경우 로또 UI의 <label>에 로또 구입 금액의 1000 단위 개수를 변경하지 않는다.", () => {});
+  it("엔터 키 입력 시 로또 구입 금액이 로또 UI의 <label>에 로또 구입 금액의 1000 단위 개수를 띄운다.", () => {
+    cy.get("#purchase-form-input").type(10000);
+    cy.get("#purchase-form-button").click();
+    cy.get("#purchase-section-label").should(
+      "have.text",
+      "총 10개를 구매하였습니다."
+    );
+  });
+  it("엔터 키 입력 시 로또 <span> UI의 당첨 번호 숫자 6개가 지정된다. ", () => {
+    cy.get("#purchase-form-input").type(1000);
+    cy.get("#purchase-form-button").click();
+    cy.get("#purchase-section-label").should(
+      "have.text",
+      "총 10개를 구매하였습니다."
+    );
+  });
 
   // click event
-  it("확인버튼 클릭 시 로또 구입 금액이 1000 단위가 아닌 경우 alert 경고를 띄운다. ", () => {});
-  it("확인버튼 클릭 시 로또 구입 금액이 1000 단위가 아닌 경우 input값을 비운다. ", () => {});
+  it("확인버튼 클릭 시 로또 구입 금액이 1000 단위가 아닌 경우 alert 경고를 띄운다. ", () => {
+    const stub = cy.stub();
+    cy.on("window:alert", stub);
 
-  it("확인버튼 클릭 시 로또 UI의 <label>에 로또 구입 금액의 1000 단위 개수를 띄운다.", () => {});
+    cy.get("#purchase-form-input").type("1100");
+    cy.get("#purchase-form-button")
+      .click()
+      .then(() => {
+        expect(stub.getCall(0)).to.be.calledWith(
+          "로또 구입 금액을 1,000원 단위로 입력해 주세요."
+        );
+      });
+  });
+  it("확인버튼 클릭 시 로또 구입 금액이 1000 단위가 아닌 경우 input값을 비운다. ", () => {
+    cy.get("#purchase-form-input").type("1100");
+    cy.get("#purchase-form-button")
+      .click()
+      .then(() => {
+        expect(cy.get("#purchase-form-input").should("have.value", ""));
+      });
+  });
 
-  it("확인버튼 클릭 시 로또 <span> UI의 당첨 번호 숫자 6개가 지정된다. ", () => {});
+  it("확인버튼 클릭 시 로또 UI의 <label>에 로또 구입 금액의 1000 단위 개수를 띄운다.", () => {
+    cy.get("#purchase-form-input").type(10000);
+    cy.get("#purchase-form-button").click();
+    cy.get("#purchase-section-label").should(
+      "have.text",
+      "총 10개를 구매하였습니다."
+    );
+  });
+
+  it("확인버튼 클릭 시 로또 <span> UI의 당첨 번호 숫자 6개가 지정된다. ", () => {
+    cy.get("#purchase-form-input").type(1000);
+    cy.get("#purchase-form-button").click();
+    cy.get("#purchase-section-ul").children(".lotto-detail");
+    cy.get(".lotto-detail").should("have.text"); // 랜덤함수 항목 값 점검 어떻게?
+    // .should("not.exist");
+    // should("be.visible");
+  });
 
   // 로또 UI(purchased-lottos) 기능
   // key event
