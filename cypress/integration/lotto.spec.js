@@ -105,14 +105,14 @@ describe("lotto-domain-test", () => {
 
   // 로또 UI(purchased-lottos) 기능
   // key event
-  it("로또 금액 입력 후 엔터 키 입력 시 번호보기 토글 상태를 초기화한다. ", () => {});
+  it("로또 금액 입력 후 엔터 키 입력 시 번호보기 토글 상태를 초기화한다. ", () => {}); // check : 토글 상태 구분
   it("로또 <span> UI의 당첨 번호가 띄워진 상태에서 로또 금액 입력 후 엔터 키 입력 시 번호보기 토글 상태를 초기화한다. ", () => {});
 
   //click event
   it("로또 금액 입력 후 확인버튼 클릭 시 번호보기 토글 상태를 초기화한다. ", () => {});
   it("로또 <span> UI의 당첨 번호가 띄워진 상태에서 로또 금액 입력 후 확인버튼 클릭 시 번호보기 토글 상태를 초기화한다. ", () => {});
 
-  it("로또 <span> UI의 당첨 번호는 1부터 45 사이 값이다. ", () => {});
+  it("로또 <span> UI의 당첨 번호는 1부터 45 사이 값이다. ", () => {}); // check : 보이지 않아도 체크
   it("로또 <span> UI의 당첨 번호는 티켓 별 중복 숫자가 없다. ", () => {});
 });
 
@@ -122,19 +122,72 @@ describe("lotto-ui-test", () => {
   });
 
   // default
-  it("로또 금액 입력값이 없는 경우 placeholder에 '구입 금액' 텍스트가 보여진다.", () => {});
-  it("엔터 키 입력 시 input 값이 없는 경우 로또 UI를 띄우지 않는다. ", () => {});
-  it("확인버튼 클릭 시 input 값이 없는 경우 로또 UI를 띄우지 않는다. ", () => {});
+  it("로또 금액 입력값이 없는 경우 placeholder에 '구입 금액' 텍스트가 보여진다.", () => {
+    cy.reload();
+    cy.get("#purchase-form-input").should(
+      "have.attr",
+      "placeholder",
+      "구입 금액"
+    );
+    cy.get("#purchase-form-input").should("have.value", "");
+  });
+  it("엔터 키 입력 시 input 값이 없는 경우 로또 UI를 띄우지 않는다. ", () => {
+    cy.reload();
+    cy.get("#purchase-form-input").type(`{enter}`);
+    cy.get("#purchased-lottos")
+      .its("style")
+      .its("display")
+      .should("eq", "none");
+  });
+  it("확인버튼 클릭 시 input 값이 없는 경우 로또 UI를 띄우지 않는다. ", () => {
+    cy.reload();
+    cy.get("#purchase-form-button").click();
+    cy.get("#purchased-lottos")
+      .its("style")
+      .its("display")
+      .should("eq", "none");
+  });
 
   // 로또 구입 금액 입력
   // key 입력 시
-  it("엔터 키 입력 시 로또 UI(purchased-lottos, input-lotto-nums)를 띄운다. ", () => {});
-  it("엔터 키 입력 시 로또 구입 금액의 1000 단위 개수만큼 로또 <span> UI를 띄운다. ", () => {});
+  it("엔터 키 입력 시 로또 UI(purchased-lottos, input-lotto-nums)를 띄운다. ", () => {
+    cy.get("#purchase-form-input").type(1000`{enter}`);
+    cy.get("#purchased-lottos")
+      .its("style")
+      .its("display")
+      .should("eq", "block");
+  });
+  it("엔터 키 입력 시 로또 구입 금액의 1000 단위 개수만큼 로또 <span> UI를 띄운다. ", () => {
+    cy.get("#purchase-form-input").type(4000`{enter}`);
+    cy.get("#purchase-section-ul").should("have.length", 4);
+  });
 
   // click 시
-  it("확인버튼 클릭 시 로또 UI(purchased-lottos, input-lotto-nums)를 띄운다. ", () => {});
-  it("확인버튼 클릭 시 로또 구입 금액의 1000 단위 개수만큼 로또 <span> UI를 띄운다. ", () => {});
+  it("확인버튼 클릭 시 로또 UI(purchased-lottos, input-lotto-nums)를 띄운다. ", () => {
+    cy.get("#purchase-form-input").type(1000);
+    cy.get("#purchase-form-button").click();
+    cy.get("#purchased-lottos")
+      .its("style")
+      .its("display")
+      .should("eq", "block");
+  });
+  it("확인버튼 클릭 시 로또 구입 금액의 1000 단위 개수만큼 로또 <span> UI를 띄운다. ", () => {
+    cy.get("#purchase-form-input").type(4000);
+    cy.get("#purchase-form-button").click();
+    cy.get("#purchase-section-ul").should("have.length", 4);
+  });
 
-  it("번호보기 토글 시 로또 <span> UI의 당첨 번호 숫자를 띄운다.", () => {});
-  it("번호보기 토글 시 로또 <span> UI의 당첨 번호 숫자를 가린다.", () => {});
+  it("번호보기 토글 시 로또 <span> UI의 당첨 번호 숫자를 띄운다.", () => {
+    cy.get("#purchase-form-input").type(1000);
+    cy.get("#purchase-form-button").click();
+    cy.get(".text-base").click();
+    cy.get(".lotto-detail").its("style").its("display").should("eq", "inline");
+  });
+  it("번호보기 토글 시 로또 <span> UI의 당첨 번호 숫자를 가린다.", () => {
+    cy.get("#purchase-form-input").type(1000);
+    cy.get("#purchase-form-button").click();
+    cy.get(".text-base").click();
+    cy.get(".text-base").click();
+    cy.get(".lotto-detail").its("style").its("display").should("eq", "none");
+  });
 });
