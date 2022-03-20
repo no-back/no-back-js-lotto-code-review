@@ -19,14 +19,15 @@
                 type="number"
                 class="w-100 mr-2 pl-2 purchase-form__input"
                 placeholder="구입 금액"
+                min="1000"
               />
               </label>
               <button type="button" class="btn btn-cyan purchase-form__button">확인</button>
             </div>
           </form>
-          <section class="mt-9 d-none">
+          <section class="mt-9 purchased-lotto-section d-none">
             <div class="d-flex">
-              <label class="flex-auto my-0">총 5개를 구매하였습니다.</label>
+              <h5 class="flex-auto my-0 purchased-lotto-label">총 5개를 구매하였습니다.</h5>
               <div class="flex-auto d-flex justify-end pr-1">
                 <label class="switch">
                   <input type="checkbox" class="lotto-numbers-toggle-button" />
@@ -34,13 +35,8 @@
                 </label>
               </div>
             </div>
-            <div class="d-flex flex-wrap">
-              <!-- <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span>
-              <span class="mx-1 text-4xl">🎟️ </span> -->
-            </div>
+            <ul class="d-flex flex-wrap pl-0 lotto-ticket-container">
+            </ul>
           </section>
           <form class="mt-9">
             <label class="flex-auto d-inline-block mb-3"
