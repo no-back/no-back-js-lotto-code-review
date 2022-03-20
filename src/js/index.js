@@ -49,6 +49,10 @@ class PurchaseAmountForm extends LottoApp {
   }
 
   init() {
+    this.initEventListener();
+  }
+
+  initEventListener() {
     $purchaseForm.addEventListener("submit", (e) => {
       e.preventDefault();
     });
@@ -61,6 +65,7 @@ class PurchaseAmountForm extends LottoApp {
       this.showIssuanceResultSection()
     );
   }
+}
 
   showIssuanceResultSection() {
     // valitate 기능
