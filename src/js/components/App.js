@@ -4,19 +4,19 @@ import LottoTicket from "../model/LottoTicket.js";
 
 export default class App {
   constructor() {
-    this.LottoTickets = [];
+    this.lottoTickets = [];
 
     this.inputPurchaseAmount = new InputPurchaseAmount({
-      createdLottoTickets: this.createLottoTickets.bind(this),
+      createLottoTickets: this.createLottoTickets.bind(this),
     });
     this.purchasedLotto = new PurchasedLotto({
       lottoTickets: this.lottoTickets,
     });
   }
 
-  createLottoTickets(numbersOfLotto) {
+  createLottoTickets(numOfLotto) {
     this.setState({
-      lottoTickets: [numbersOfLotto].fill().map((v) => new LottoTicket()),
+      lottoTickets: Array(numOfLotto).fill().map((v) => new LottoTicket()),
     });
   }
 
