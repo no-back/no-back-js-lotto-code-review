@@ -79,14 +79,12 @@ export default class PurchaseAmountForm {
 
   autoNumberingLottoTicket() {
     this.lottoTickets.map((ticket) => {
-      for (let i = 0; i < this.lottoTickets.length; i++) {
-        let lottoNumbers = [];
-        for (let j = 0; j < 6; j++) {
-          const randomNumber = Math.ceil(Math.random() * 45);
-          lottoNumbers.push(randomNumber);
-        }
-        this.lottoTickets[i].lottoNumbers = lottoNumbers;
+      let lottoNumbers = [];
+      for (let j = 0; j < 6; j++) {
+        const randomNumber = Math.ceil(Math.random() * 45);
+        lottoNumbers.push(randomNumber);
       }
+      ticket.lottoNumbers = lottoNumbers;
     });
   }
 
