@@ -1,13 +1,15 @@
-import { $, $$ } from "./dom.js";
-
-const $showResultButton = $(".open-result-modal-button");
-const $modalClose = $(".modal-close");
-const $modal = $(".modal");
-const $lottoNumbersToggleButton = $(".lotto-numbers-toggle-button");
-const $purchaseForm = $("#purchase-amount-form");
-const $purchaseAmountInput = $("#purchase-amount-input");
-const $purchaseResultButton = $("#purchase-amount-result-button");
-const $lottoTickets = $("#issuance-lotto-tickets");
+import {
+  $,
+  $$,
+  $showResultButton,
+  $modalClose,
+  $modal,
+  $lottoNumbersToggleButton,
+  $purchaseForm,
+  $purchaseAmountInput,
+  $purchaseResultButton,
+  $lottoTickets,
+} from "./dom.js";
 
 const onModalShow = () => {
   $modal.classList.add("open");
