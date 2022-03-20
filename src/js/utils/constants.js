@@ -3,6 +3,8 @@ export const MONETARY_UNIT = 1;
 export const LOTTO_MIN_NUMBER = 1;
 export const LOTTO_MAX_NUMBER = 45;
 export const LOTTO_NUMBERS_LENGTH = 6;
+export const PURCHASED_QUANTITY_MESSAGE = (countOfLotto) =>
+  `총 ${countOfLotto}개를 구매하였습니다.`;
 
 export const ALERT_MESSAGE = {
   PURCHASE_AMOUNT_IS_INVALID_AMOUNT: `화폐단위 미만의 자릿수가 포함된 금액입니다.\n${MONETARY_UNIT}원 단위로 입력해주세요`,
