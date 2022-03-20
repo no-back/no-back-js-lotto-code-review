@@ -27,24 +27,21 @@ class LottoApp {
     this.purchasedAmount = 0;
     this.lottoCount = 0;
     this.lottoTickets = [];
+
+    this.purchageAmountForm = new PurchaseAmountForm();
+    this.issuaranceResultSection = new IssuanceResultSection();
+    this.winningNumberForm = new WinningNumberForm();
   }
 
   init() {
     this.render();
   }
 
-  render() {
-    this.purchageAmountForm = new PurchaseAmountForm($purchaseForm);
-    this.issuaranceResultSection = new IssuanceResultSection(
-      $("#issuance-result")
-    );
-    this.winningNumberForm = new WinningNumberForm($("#winning-number-form"));
-  }
+  render() {}
 }
 
-class PurchaseAmountForm extends LottoApp {
-  constructor($element) {
-    super($element);
+class PurchaseAmountForm {
+  constructor() {
     this.init();
   }
 
@@ -65,7 +62,6 @@ class PurchaseAmountForm extends LottoApp {
       this.showIssuanceResultSection()
     );
   }
-}
 
   showIssuanceResultSection() {
     // valitate 기능
@@ -96,12 +92,10 @@ class PurchaseAmountForm extends LottoApp {
   };
 
   updateLottoTickets = () => {
-    // 로또 발급상태 초기화
     this.lottoTickets = [];
     this.lottoCount = this.purchasedAmount / 1000;
     // TODO - 토글버튼 초기화
 
-    // 로또 라벨 갱신, 티켓 리스트 갱신
     $(
       "#issuance-label"
     ).textContent = `총 ${this.lottoCount}개를 구매하였습니다.`;
@@ -110,10 +104,8 @@ class PurchaseAmountForm extends LottoApp {
       this.lottoTickets.push({ lottoNumbers: [] });
     }
 
-    // 자동 발급숫자 부여
-    this.autoNumberingLottoTicket(); // <> ManualNumbering
+    this.autoNumberingLottoTicket();
 
-    // 티켓 리스트 DOM 변경
     $lottoTickets.innerHTML = this.lottoTickets
       .map((ticket) => this.lottoTicketTemplate(ticket))
       .join("");
@@ -140,9 +132,8 @@ class PurchaseAmountForm extends LottoApp {
   };
 }
 
-class IssuanceResultSection extends LottoApp {
-  constructor($element) {
-    super($element);
+class IssuanceResultSection {
+  constructor() {
     this.isToggled = false;
     this.init();
   }
@@ -154,7 +145,6 @@ class IssuanceResultSection extends LottoApp {
   }
 
   toggleLottoNumber(e) {
-    // switch 토글 기능 (style)
     [...$$(".lotto-detail")].map((item) =>
       item.style.display == "none"
         ? (item.style.display = "inline")
@@ -167,11 +157,8 @@ class IssuanceResultSection extends LottoApp {
   }
 }
 
-class WinningNumberForm extends LottoApp {
-  constructor($element) {
-    super($element);
-  }
+class WinningNumberForm {
+  constructor() {}
 }
 
 const lottoApp = new LottoApp();
-lottoApp.init();
