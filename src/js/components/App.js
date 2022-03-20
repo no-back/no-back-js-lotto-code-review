@@ -9,19 +9,24 @@ export default class App {
     this.inputPurchaseAmount = new InputPurchaseAmount({
       createLottoTickets: this.createLottoTickets.bind(this),
     });
-    this.purchasedLotto = new PurchasedLotto({
+  }
+
+  showPurchasedLotto() {
+    new PurchasedLotto({
       lottoTickets: this.lottoTickets,
     });
   }
 
   createLottoTickets(numOfLotto) {
     this.setState({
-      lottoTickets: Array(numOfLotto).fill().map((v) => new LottoTicket()),
+      lottoTickets: Array(numOfLotto)
+        .fill()
+        .map((v) => new LottoTicket()),
     });
+    this.showPurchasedLotto(this.lottoTickets);
   }
 
   setState({ lottoTickets }) {
     this.lottoTickets = lottoTickets;
-    this.purchasedLotto.setState({ lottoTickets: this.lottoTickets });
   }
 }
