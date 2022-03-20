@@ -18,6 +18,6 @@ export default class LottoTicket {
       array.push(number);
     }
 
-    return array;
+    return this.createLottoNumbers(array);
   }
 }
