@@ -7,7 +7,7 @@ export default class App {
     this.LottoTickets = [];
 
     this.inputPurchaseAmount = new InputPurchaseAmount({
-      createLottoTickets: this.createLottoTickets.bind(this),
+      createdLottoTickets: this.createLottoTickets.bind(this),
     });
     this.purchasedLotto = new PurchasedLotto({
       lottoTickets: this.lottoTickets,
