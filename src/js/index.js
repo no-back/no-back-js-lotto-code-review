@@ -136,18 +136,27 @@ class PurchaseAmountForm extends LottoApp {
 class IssuanceResultSection extends LottoApp {
   constructor($element) {
     super($element);
-    this.init();
     this.isToggled = false;
+    this.init();
   }
 
   init() {
-    $(".lotto-numbers-toggle-button").addEventListener("click", (e) =>
+    $lottoNumbersToggleButton.addEventListener("click", (e) =>
       this.toggleLottoNumber()
     );
   }
 
   toggleLottoNumber(e) {
     // switch 토글 기능 (style)
+    [...$$(".lotto-detail")].map((item) =>
+      item.style.display == "none"
+        ? (item.style.display = "inline")
+        : (item.style.display = "none")
+    );
+    $lottoTickets.classList.contains("flex-col")
+      ? $lottoTickets.classList.remove("flex-col")
+      : $lottoTickets.classList.add("flex-col");
+    this.isToggled = !this.isToggled;
   }
 }
 
