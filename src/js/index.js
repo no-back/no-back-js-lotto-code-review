@@ -4,6 +4,10 @@ const $showResultButton = $(".open-result-modal-button");
 const $modalClose = $(".modal-close");
 const $modal = $(".modal");
 const $lottoNumbersToggleButton = $(".lotto-numbers-toggle-button");
+const $purchaseForm = $("#purchase-amount-form");
+const $purchaseAmountInput = $("#purchase-amount-input");
+const $purchaseResultButton = $("#purchase-amount-result-button");
+const $lottoTickets = $("#issuance-lotto-tickets");
 
 const onModalShow = () => {
   $modal.classList.add("open");
@@ -28,9 +32,7 @@ class LottoApp {
   }
 
   render() {
-    this.purchageAmountForm = new PurchaseAmountForm(
-      $("#purchase-amount-form")
-    );
+    this.purchageAmountForm = new PurchaseAmountForm($purchaseForm);
     this.issuaranceResultSection = new IssuanceResultSection(
       $("#issuance-result")
     );
@@ -45,30 +47,89 @@ class PurchaseAmountForm extends LottoApp {
   }
 
   init() {
-    // init event listeners
-    $("#purchase-amount-form").addEventListener("submit", (e) => {
+    $purchaseForm.addEventListener("submit", (e) => {
       e.preventDefault();
     });
 
-    $("#purchase-amount-input").addEventListener("keydown", (e) => {
+    $purchaseAmountInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") this.showIssuanceResultSection();
     });
 
-    $("#purchase-amount-result-button").addEventListener("click", (e) =>
+    $purchaseResultButton.addEventListener("click", (e) =>
       this.showIssuanceResultSection()
     );
   }
 
   showIssuanceResultSection() {
     // valitate 기능
+    const purchaseInputValue = $purchaseAmountInput.value;
+    if (!this.isValidatePurchaseAmount(purchaseInputValue)) {
+      $purchaseAmountInput.value = "";
+      return;
+    }
+
     // 로또 발급 함수 호출
+    this.purchasedAmount = purchaseInputValue;
+    this.updateLottoTickets();
+
+    $("#issuance-result").style.display = "block";
+    $("#winning-number-form").style.display = "block";
   }
+
+  isValidatePurchaseAmount = (purchaseInputValue) => {
+    purchaseInputValue = +purchaseInputValue;
+    if (purchaseInputValue === "") return false;
+
+    if (purchaseInputValue % 1000 !== 0) {
+      alert("로또 구입 금액을 1,000원 단위로 입력해 주세요.");
+      return false;
+    }
+
+    if (purchaseInputValue >= 1000 && purchaseInputValue <= 100000) return true;
+  };
 
   updateLottoTickets = () => {
     // 로또 발급상태 초기화
+    this.lottoTickets = [];
+    this.lottoCount = this.purchasedAmount / 1000;
+    // TODO - 토글버튼 초기화
+
     // 로또 라벨 갱신, 티켓 리스트 갱신
+    $(
+      "#issuance-label"
+    ).textContent = `총 ${this.lottoCount}개를 구매하였습니다.`;
+
+    for (let i = 0; i < this.lottoCount; i++) {
+      this.lottoTickets.push({ lottoNumbers: [] });
+    }
+
     // 자동 발급숫자 부여
-    // style 변경
+    this.autoNumberingLottoTicket(); // <> ManualNumbering
+
+    // 티켓 리스트 DOM 변경
+    $lottoTickets.innerHTML = this.lottoTickets
+      .map((ticket) => this.lottoTicketTemplate(ticket))
+      .join("");
+  };
+
+  autoNumberingLottoTicket() {
+    this.lottoTickets.map((ticket) => {
+      for (let i = 0; i < this.lottoTickets.length; i++) {
+        let lottoNumbers = [];
+        for (let j = 0; j < 6; j++) {
+          const randomNumber = Math.ceil(Math.random() * 45);
+          lottoNumbers.push(randomNumber);
+        }
+        this.lottoTickets[i].lottoNumbers = lottoNumbers;
+      }
+    });
+  }
+
+  lottoTicketTemplate = (item) => {
+    return `<li class="mx-1 text-4xl lotto-wrapper">
+        <span class="lotto-icon">🎟️</span>
+        <span class="lotto-detail" style="display: none;">${item.lottoNumbers}</span>
+    </li>`;
   };
 }
 
@@ -80,7 +141,6 @@ class IssuanceResultSection extends LottoApp {
   }
 
   init() {
-    // init event listeners
     $(".lotto-numbers-toggle-button").addEventListener("click", (e) =>
       this.toggleLottoNumber()
     );

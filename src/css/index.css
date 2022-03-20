@@ -8,7 +8,7 @@ body {
   font-size: 16px;
 }
 
-#app {
+#lotto-app {
   max-width: 400px;
   margin: 0 auto;
 }
@@ -21,4 +21,8 @@ body {
 .bonus-number {
   width: 30px;
   height: 36px;
+}
+
+ul {
+  padding: 0;
 }
