@@ -13,7 +13,8 @@
           <h1 class="text-center">🎱 행운의 로또</h1>
           <form class="mt-5 purchase-form" aria-labelledby="input-price">
             <label for="input-price" class="mb-2 d-inline-block"
-              >구입할 금액을 입력해주세요.</label>
+              >구입할 금액을 입력해주세요.</label
+            >
             <div class="d-flex">
               <input
                 type="number"
@@ -25,23 +26,24 @@
                 max="100000"
                 required
               />
-              <button type="submit" class="btn btn-cyan purchase-form__button">확인</button>
+              <button type="submit" class="btn btn-cyan purchase-form__button">
+                확인
+              </button>
             </div>
           </form>
           <section class="mt-9 purchased-lotto-section d-none">
             <div class="d-flex">
-              <h5 class="flex-auto my-0 purchased-lotto-label">총 5개를 구매하였습니다.</h5>
+              <h4 class="flex-auto my-0 purchased-lotto-label"></h4>
               <div class="flex-auto d-flex justify-end pr-1">
-                <label class="switch">
-                  <input type="checkbox" class="lotto-numbers-toggle-button" />
+                <label class="switch" for="toggle-number-show"">
+                  <input type="checkbox" class="lotto-numbers-toggle-button" id="toggle-number-show"/>
                   <span class="text-base font-normal">번호보기</span>
                 </label>
               </div>
             </div>
-            <ul class="d-flex flex-wrap pl-0 lotto-ticket-container">
-            </ul>
+            <ul class="d-flex flex-wrap pl-0 lotto-ticket-container"></ul>
           </section>
-          <form class="mt-9 d-none" id="input-lotto-nums" aria-labelledby="">
+          <form class="mt-9 d-none" id="input-lotto-numbers" aria-labelledby="input-won-numbers">
             <label class="flex-auto d-inline-block mb-3"
               >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
             >
