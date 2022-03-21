@@ -25,6 +25,7 @@ export default class PurchasedLotto {
     }
   }
   showNumbers() {
+    this.$lottoTicketContainer.classList.add("flex-col");
     $$(".lotto-numbers").forEach(($lottoNumbers) =>
       $lottoNumbers.classList.remove("d-none")
     );
@@ -61,6 +62,9 @@ export default class PurchasedLotto {
     this.$lottoTicketContainer.innerHTML = this.lottoTickets
       .map(this.createLottoTicketHTML)
       .join("");
+    if (this.$lottoNumbersToggleButton.checked === false) {
+      this.hideNumbers();
+    }
 
     if (this.$lottoNumbersToggleButton.checked) {
       this.showNumbers();
