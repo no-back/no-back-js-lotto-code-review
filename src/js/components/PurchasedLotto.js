@@ -9,10 +9,10 @@ export default class PurchasedLotto {
     this.$lastWonLottoNumbersForm = $("#input-lotto-numbers");
     this.lottoTickets = lottoTickets;
 
-    this.initEventListener();
+    this.init();
     this.render();
   }
-  initEventListener() {
+  init() {
     $(".switch").addEventListener("click", (e) =>
       this.onToggleShowingNumbers(e)
     );
@@ -48,6 +48,10 @@ export default class PurchasedLotto {
     </li>`;
   }
 
+  setState({ lottoTickets }) {
+    this.lottoTickets = lottoTickets;
+    this.render();
+  }
   render() {
     const countOfLotto = this.lottoTickets.length;
 
@@ -69,10 +73,5 @@ export default class PurchasedLotto {
     if (this.$lottoNumbersToggleButton.checked) {
       this.showNumbers();
     }
-  }
-
-  setState({ lottoTickets }) {
-    this.lottoTickets = lottoTickets;
-    this.render();
   }
 }
