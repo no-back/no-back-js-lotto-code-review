@@ -1,4 +1,5 @@
 import { $ } from "../dom.js";
+import { LOTTO_PRICE, LOTTO_MAX_PRICE } from "../const.js";
 
 export default class PurchaseAmountForm {
   constructor() {
@@ -45,20 +46,24 @@ export default class PurchaseAmountForm {
   }
 
   isValidatePurchaseAmount = (purchaseInputValue) => {
-    purchaseInputValue = +purchaseInputValue;
+    purchaseInputValue = purchaseInputValue;
     if (purchaseInputValue === "") return false;
 
-    if (purchaseInputValue % 1000 !== 0) {
+    if (purchaseInputValue % LOTTO_PRICE !== 0) {
       alert("로또 구입 금액을 1,000원 단위로 입력해 주세요.");
       return false;
     }
 
-    if (purchaseInputValue >= 1000 && purchaseInputValue <= 100000) return true;
+    if (
+      purchaseInputValue >= LOTTO_PRICE &&
+      purchaseInputValue <= LOTTO_MAX_PRICE
+    )
+      return true;
   };
 
   updateLottoTickets = () => {
     this.lottoTickets = [];
-    this.lottoCount = this.purchasedAmount / 1000;
+    this.lottoCount = this.purchasedAmount / LOTTO_PRICE;
     // TODO - 토글버튼 초기화
 
     $(
