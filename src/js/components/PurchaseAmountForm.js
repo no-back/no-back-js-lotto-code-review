@@ -7,7 +7,7 @@ export default class PurchaseAmountForm {
     this.$purchaseAmountInput = $("#purchase-amount-input");
     this.$purchaseResultButton = $("#purchase-amount-result-button");
     this.$lottoTickets = $("#issuance-lotto-tickets");
-    this.purchasedAmount = 0;
+    this.purchasedAmount = "";
     this.init();
   }
 
@@ -20,6 +20,9 @@ export default class PurchaseAmountForm {
       e.preventDefault();
       this.showIssuanceResultSection();
     });
+
+    // TODO : 실시간 data state check(keyinput)
+    // 이전 값과 다를때만 재렌더링
   }
 
   showIssuanceResultSection() {
@@ -70,7 +73,7 @@ export default class PurchaseAmountForm {
   };
 
   autoNumberingLottoTicket() {
-    this.lottoTickets.map((ticket) => {
+    this.lottoTickets.forEach((ticket) => {
       let lottoNumbers = [];
       for (let j = 0; j < 6; j++) {
         const randomNumber = Math.floor(Math.random() * 44) + 1;
