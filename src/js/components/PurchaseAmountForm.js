@@ -1,5 +1,5 @@
 import { $ } from "../dom.js";
-import { LOTTO_PRICE, LOTTO_MAX_PRICE, MESSAGE } from "../const.js";
+import { LOTTO_PRICE, MESSAGE } from "../const.js";
 
 export default class PurchaseAmountForm {
   constructor() {
@@ -46,12 +46,7 @@ export default class PurchaseAmountForm {
       alert(MESSAGE.ALERT_LOTTO_PRICE);
       return false;
     }
-
-    if (
-      purchaseInputValue >= LOTTO_PRICE &&
-      purchaseInputValue <= LOTTO_MAX_PRICE
-    )
-      return true;
+    return true;
   };
 
   updateLottoTickets = () => {
