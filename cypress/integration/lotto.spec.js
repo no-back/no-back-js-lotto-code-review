@@ -74,15 +74,39 @@ describe("lotto-domain-test", () => {
   });
 
   // key event
-  it("로또 금액 입력 후 엔터 키 입력 시 번호보기 토글 상태를 초기화한다. ", () => {});
-  it("로또 <span> UI의 당첨 번호가 띄워진 상태에서 로또 금액 입력 후 엔터 키 입력 시 번호보기 토글 상태를 초기화한다. ", () => {});
+  it("로또 금액 입력 후 엔터 키 입력 시 번호보기 토글 상태를 초기화한다. ", () => {
+    cy.get("#purchase-amount-input").type(`10000{enter}`);
+    cy.get(".lotto-numbers-toggle-button").should("not.be.checked");
+  });
+  it("로또 <span> UI의 당첨 번호가 띄워진 상태에서 로또 금액 입력 후 엔터 키 입력 시 번호보기 토글 상태를 초기화한다. ", () => {
+    cy.get("#purchase-amount-input").type(`10000{enter}`);
+    cy.get("#purchase-amount-input").type(`1000{enter}`);
+    cy.get(".lotto-numbers-toggle-button").should("not.be.checked");
+  });
 
   //click event
-  it("로또 금액 입력 후 확인버튼 클릭 시 번호보기 토글 상태를 초기화한다. ", () => {});
-  it("로또 <span> UI의 당첨 번호가 띄워진 상태에서 로또 금액 입력 후 확인버튼 클릭 시 번호보기 토글 상태를 초기화한다. ", () => {});
+  it("로또 금액 입력 후 확인버튼 클릭 시 번호보기 토글 상태를 초기화한다. ", () => {
+    cy.get("#purchase-amount-input").type(10000);
+    cy.get("#purchase-amount-result-button").click();
+    cy.get(".lotto-numbers-toggle-button").should("not.be.checked");
+  });
+  it("로또 <span> UI의 당첨 번호가 띄워진 상태에서 로또 금액 입력 후 확인버튼 클릭 시 번호보기 토글 상태를 초기화한다. ", () => {
+    cy.get("#purchase-amount-input").type(`10000{enter}`);
+    cy.get("#purchase-amount-input").type(10000);
+    cy.get("#purchase-amount-result-button").click();
+    cy.get(".lotto-numbers-toggle-button").should("not.be.checked");
+  });
 
   it("로또 <span> UI의 당첨 번호는 1부터 45 사이 값이다. ", () => {}); // check : 보이지 않아도 체크, random number
-  it("로또 <span> UI의 당첨 번호는 티켓 별 중복 숫자가 없다. ", () => {});
+  it("로또 <span> UI의 당첨 번호 6개이고 중복 숫자가 없다. ", () => {
+    cy.get("#purchase-amount-input").type(`10000{enter}`);
+    cy.get(".lotto-detail").should((ticket) => {
+      ticket.toArray().map((number) => {
+        const set = new Set(number.textContent.split(","));
+        expect(set.size).to.equal(6);
+      });
+    });
+  });
 });
 
 describe("lotto-ui-test", () => {
