@@ -1,5 +1,5 @@
 import { $ } from "../dom.js";
-import { LOTTO_PRICE, LOTTO_MAX_PRICE } from "../const.js";
+import { LOTTO_PRICE, LOTTO_MAX_PRICE, MESSAGE } from "../const.js";
 
 export default class PurchaseAmountForm {
   constructor() {
@@ -50,7 +50,7 @@ export default class PurchaseAmountForm {
     if (purchaseInputValue === "") return false;
 
     if (purchaseInputValue % LOTTO_PRICE !== 0) {
-      alert("로또 구입 금액을 1,000원 단위로 입력해 주세요.");
+      alert(MESSAGE.ALERT_LOTTO_PRICE);
       return false;
     }
 
