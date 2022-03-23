@@ -73,8 +73,10 @@ export default class PurchaseAmountForm {
     this.lottoTickets.map((ticket) => {
       let lottoNumbers = [];
       for (let j = 0; j < 6; j++) {
-        const randomNumber = Math.floor(Math.random() * 45 + 1);
-        lottoNumbers.push(randomNumber);
+        const randomNumber = Math.floor(Math.random() * 44) + 1;
+        lottoNumbers.includes(randomNumber)
+          ? j--
+          : lottoNumbers.push(randomNumber);
       }
       ticket.lottoNumbers = lottoNumbers;
     });
