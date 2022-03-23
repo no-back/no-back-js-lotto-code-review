@@ -1,3 +1,7 @@
+const MESSAGE = {
+  ALERT_LOTTO_PRICE: "로또 구입 금액을 1,000원 단위로 입력해 주세요.",
+};
+
 describe("lotto-domain-test", () => {
   beforeEach(() => {
     cy.visit("/");
@@ -20,9 +24,7 @@ describe("lotto-domain-test", () => {
     cy.get("#purchase-amount-input")
       .type("1100{enter}")
       .then(() => {
-        expect(stub.getCall(0)).to.be.calledWith(
-          "로또 구입 금액을 1,000원 단위로 입력해 주세요."
-        );
+        expect(stub.getCall(0)).to.be.calledWith(MESSAGE.ALERT_LOTTO_PRICE);
       });
   });
 
@@ -54,9 +56,7 @@ describe("lotto-domain-test", () => {
     cy.get("#purchase-amount-result-button")
       .click()
       .then(() => {
-        expect(stub.getCall(0)).to.be.calledWith(
-          "로또 구입 금액을 1,000원 단위로 입력해 주세요."
-        );
+        expect(stub.getCall(0)).to.be.calledWith(MESSAGE.ALERT_LOTTO_PRICE);
       });
   });
   it("확인버튼 클릭 시 로또 구입 금액이 1000 단위가 아닌 경우 input값을 비운다. ", () => {
