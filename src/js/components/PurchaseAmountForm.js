@@ -37,6 +37,7 @@ export default class PurchaseAmountForm {
     this.purchasedAmount = purchaseInputValue;
     this.updateLottoTickets();
 
+    $(".lotto-numbers-toggle-button").checked = false;
     $("#issuance-result").style.display = "block";
     $("#winning-number-form").style.display = "block";
   }
@@ -55,7 +56,6 @@ export default class PurchaseAmountForm {
   updateLottoTickets = () => {
     this.lottoTickets = [];
     this.lottoCount = this.purchasedAmount / LOTTO_PRICE;
-    // TODO - 토글버튼 초기화
 
     $(
       "#issuance-label"
@@ -70,6 +70,8 @@ export default class PurchaseAmountForm {
     this.$lottoTickets.innerHTML = this.lottoTickets
       .map((ticket) => this.lottoTicketTemplate(ticket))
       .join("");
+
+    this.$lottoTickets.classList.remove("flex-col");
   };
 
   autoNumberingLottoTicket() {
