@@ -1,13 +1,12 @@
-import {
-  $,
-  $purchaseForm,
-  $purchaseAmountInput,
-  $purchaseResultButton,
-  $lottoTickets,
-} from "../dom.js";
+import { $ } from "../dom.js";
 
 export default class PurchaseAmountForm {
   constructor() {
+    this.$purchaseAmountForm = $("#purchase-amount-form");
+    this.$purchaseAmountInput = $("#purchase-amount-input");
+    this.$purchaseResultButton = $("#purchase-amount-result-button");
+    this.$lottoTickets = $("#issuance-lotto-tickets");
+    this.purchasedAmount = 0;
     this.init();
   }
 
@@ -16,24 +15,24 @@ export default class PurchaseAmountForm {
   }
 
   initEventListener() {
-    $purchaseForm.addEventListener("submit", (e) => {
+    this.$purchaseAmountForm.addEventListener("submit", (e) => {
       e.preventDefault();
     });
 
-    $purchaseAmountInput.addEventListener("keydown", (e) => {
+    this.$purchaseAmountInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") this.showIssuanceResultSection();
     });
 
-    $purchaseResultButton.addEventListener("click", (e) =>
+    this.$purchaseResultButton.addEventListener("click", (e) =>
       this.showIssuanceResultSection()
     );
   }
 
   showIssuanceResultSection() {
     // valitate 기능
-    const purchaseInputValue = $purchaseAmountInput.value;
+    let purchaseInputValue = this.$purchaseAmountInput.value;
     if (!this.isValidatePurchaseAmount(purchaseInputValue)) {
-      $purchaseAmountInput.value = "";
+      this.$purchaseAmountInput.value = "";
       return;
     }
 
@@ -72,7 +71,7 @@ export default class PurchaseAmountForm {
 
     this.autoNumberingLottoTicket();
 
-    $lottoTickets.innerHTML = this.lottoTickets
+    this.$lottoTickets.innerHTML = this.lottoTickets
       .map((ticket) => this.lottoTicketTemplate(ticket))
       .join("");
   };

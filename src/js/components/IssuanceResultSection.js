@@ -1,12 +1,15 @@
-import { $$, $lottoNumbersToggleButton, $lottoTickets } from "../dom.js";
+import { $, $$ } from "../dom.js";
+
 export default class IssuanceResultSection {
   constructor() {
     this.isToggled = false;
+    this.$lottoNumbersToggleButton = $(".lotto-numbers-toggle-button");
+    this.$lottoTickets = $("#issuance-lotto-tickets");
     this.init();
   }
 
   init() {
-    $lottoNumbersToggleButton.addEventListener("click", (e) =>
+    this.$lottoNumbersToggleButton.addEventListener("click", (e) =>
       this.toggleLottoNumber()
     );
   }
@@ -17,9 +20,9 @@ export default class IssuanceResultSection {
         ? (item.style.display = "inline")
         : (item.style.display = "none")
     );
-    $lottoTickets.classList.contains("flex-col")
-      ? $lottoTickets.classList.remove("flex-col")
-      : $lottoTickets.classList.add("flex-col");
+    this.$lottoTickets.classList.contains("flex-col")
+      ? this.$lottoTickets.classList.remove("flex-col")
+      : this.$lottoTickets.classList.add("flex-col");
     this.isToggled = !this.isToggled;
   }
 }

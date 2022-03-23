@@ -1,16 +1,19 @@
-import { $showResultButton, $modalClose, $modal } from "../dom.js";
-
 export default class Modal {
+  constructor() {
+    this.$showResultButton = $(".open-result-modal-button");
+    this.$modalClose = $(".modal-close");
+    this.$modal = $(".modal");
+  }
   onModalShow() {
-    $modal.classList.add("open");
+    this.$modal.classList.add("open");
   }
 
   onModalClose() {
-    $modal.classList.remove("open");
+    this.$modal.classList.remove("open");
   }
 
   init() {
-    $showResultButton.addEventListener("click", onModalShow);
-    $modalClose.addEventListener("click", onModalClose);
+    this.$showResultButton.addEventListener("click", onModalShow);
+    this.$modalClose.addEventListener("click", onModalClose);
   }
 }
