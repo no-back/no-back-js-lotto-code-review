@@ -18,15 +18,8 @@ export default class PurchaseAmountForm {
   initEventListener() {
     this.$purchaseAmountForm.addEventListener("submit", (e) => {
       e.preventDefault();
+      this.showIssuanceResultSection();
     });
-
-    this.$purchaseAmountInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") this.showIssuanceResultSection();
-    });
-
-    this.$purchaseResultButton.addEventListener("click", (e) =>
-      this.showIssuanceResultSection()
-    );
   }
 
   showIssuanceResultSection() {
