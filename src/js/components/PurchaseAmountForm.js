@@ -84,7 +84,8 @@ export default class PurchaseAmountForm {
     this.lottoTickets.forEach((ticket) => {
       let lottoNumbers = [];
       for (let j = 0; j < NUM.LOTTO_NUM_COUNT; j++) {
-        const randomNumber = Math.floor(Math.random() * 45) + 1;
+        const randomNumber =
+          Math.floor(Math.random() * NUM.LOTTO_MAX_NUMBER) + 1;
         lottoNumbers.includes(randomNumber)
           ? j--
           : lottoNumbers.push(randomNumber);
