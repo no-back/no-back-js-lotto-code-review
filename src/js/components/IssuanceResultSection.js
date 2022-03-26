@@ -19,9 +19,7 @@ export default class IssuanceResultSection {
         ? (item.style.display = "inline")
         : (item.style.display = "none")
     );
-    this.$lottoTickets.classList.contains("flex-col")
-      ? this.$lottoTickets.classList.remove("flex-col")
-      : this.$lottoTickets.classList.add("flex-col");
+    this.$lottoTickets.classList.toggle("flex-col");
 
     // TODO : display, class 싱크 처리
   }
