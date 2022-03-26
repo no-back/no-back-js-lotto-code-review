@@ -7,7 +7,7 @@ export default class PurchaseAmountForm {
     this.$purchaseAmountInput = $("#purchase-amount-input");
     this.$purchaseResultButton = $("#purchase-amount-result-button");
     this.$lottoTickets = $("#issuance-lotto-tickets");
-    this.purchasedAmount = "";
+    this.lottoTickets = [];
     this.init();
   }
 
@@ -34,6 +34,7 @@ export default class PurchaseAmountForm {
     }
 
     // 로또 발급 함수 호출
+    // 라벨 업데이트, 로또리스트 업데이트 분리
     this.purchasedAmount = purchaseInputValue;
     this.updateLottoTickets();
 
@@ -54,28 +55,31 @@ export default class PurchaseAmountForm {
   };
 
   updateLottoTickets = () => {
-    this.lottoTickets = [];
     this.lottoCount = this.purchasedAmount / NUM.LOTTO_PRICE;
-
-    $(
-      "#issuance-label"
-    ).textContent = `총 ${this.lottoCount}개를 구매하였습니다.`;
-
-    for (let i = 0; i < this.lottoCount; i++) {
-      this.lottoTickets.push({ lottoNumbers: [] });
-    }
-
-    this.autoNumberingLottoTicket();
-
-    this.$lottoTickets.innerHTML = this.lottoTickets
-      .map((ticket) => this.lottoTicketTemplate(ticket))
-      .join("");
+    this.updateIssuanceLabel(this.lottoCount);
+    this.createLottoTickets();
 
     this.$lottoTickets.classList.remove("flex-col");
     this.$purchaseAmountInput.value = "";
   };
 
+  updateIssuanceLabel(lottoCount) {
+    $("#issuance-label").textContent = `총 ${lottoCount}개를 구매하였습니다.`;
+  }
+
+  createLottoTickets() {
+    this.autoNumberingLottoTicket();
+
+    this.$lottoTickets.innerHTML = this.lottoTickets
+      .map((ticket) => this.lottoTicketTemplate(ticket))
+      .join("");
+  }
+
   autoNumberingLottoTicket() {
+    for (let i = 0; i < this.lottoCount; i++) {
+      this.lottoTickets.push({ lottoNumbers: [] });
+    }
+
     this.lottoTickets.forEach((ticket) => {
       let lottoNumbers = [];
       for (let j = 0; j < NUM.LOTTO_NUM_COUNT; j++) {
