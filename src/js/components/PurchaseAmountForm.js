@@ -35,6 +35,7 @@ export default class PurchaseAmountForm {
 
     // 로또 발급 함수 호출
     // 라벨 업데이트, 로또리스트 업데이트 분리
+    this.lottoTickets = [];
     this.purchasedAmount = purchaseInputValue;
     this.updateLottoTickets();
 
