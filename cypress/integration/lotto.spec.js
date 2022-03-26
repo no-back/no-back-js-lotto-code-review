@@ -1,11 +1,4 @@
-const MESSAGE = {
-  ALERT_LOTTO_PRICE: "로또 구입 금액을 1,000원 단위로 입력해 주세요.",
-};
-
-// checkClickEvent 함수
-// checkEnterEvent 함수
-// checkSubmitEvent 함수
-// 1000이라는 상수를 이용해 계산해서 correct/uncorrect 조건 분기
+import { NUM, MESSAGE } from "../../src/js/const.js";
 
 describe("lotto-domain-test", () => {
   beforeEach(() => {
@@ -102,7 +95,7 @@ describe("lotto-domain-test", () => {
     cy.get(".lotto-numbers-toggle-button").should("not.be.checked");
   });
 
-  it("로또 <span> UI의 당첨 번호는 1부터 45 사이 값이다. ", () => {}); // check : 보이지 않아도 체크, random number
+  // it("로또 <span> UI의 당첨 번호는 1부터 45 사이 값이다. ", () => {});
   it("로또 <span> UI의 당첨 번호 6개이고 중복 숫자가 없다. ", () => {
     cy.get("#purchase-amount-input").type(`10000{enter}`);
     cy.get(".lotto-detail").should((ticket) => {

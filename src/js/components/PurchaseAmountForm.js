@@ -36,8 +36,7 @@ export default class PurchaseAmountForm {
     // 로또 발급 함수 호출
     // 라벨 업데이트, 로또리스트 업데이트 분리
     this.lottoTickets = [];
-    this.purchasedAmount = purchaseInputValue;
-    this.updateLottoTickets();
+    this.updateLottoTickets(purchaseInputValue);
 
     $(".lotto-numbers-toggle-button").checked = false;
     $("#issuance-result").style.display = "block";
@@ -55,8 +54,8 @@ export default class PurchaseAmountForm {
     return true;
   };
 
-  updateLottoTickets = () => {
-    this.lottoCount = this.purchasedAmount / NUM.LOTTO_PRICE;
+  updateLottoTickets = (purchaseInputValue) => {
+    this.lottoCount = purchaseInputValue / NUM.LOTTO_PRICE;
     this.updateIssuanceLabel(this.lottoCount);
     this.createLottoTickets();
 
