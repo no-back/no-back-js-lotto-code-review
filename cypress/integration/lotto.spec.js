@@ -2,6 +2,11 @@ const MESSAGE = {
   ALERT_LOTTO_PRICE: "로또 구입 금액을 1,000원 단위로 입력해 주세요.",
 };
 
+// checkClickEvent 함수
+// checkEnterEvent 함수
+// checkSubmitEvent 함수
+// 1000이라는 상수를 이용해 계산해서 correct/uncorrect 조건 분기
+
 describe("lotto-domain-test", () => {
   beforeEach(() => {
     cy.visit("/");
@@ -41,10 +46,10 @@ describe("lotto-domain-test", () => {
     cy.get("#issuance-label").should("have.text", "총 10개를 구매하였습니다.");
   });
 
-  it("엔터 키 입력 시 로또 UI가 갱신된다.", () => {
+  it("기존 로또 발급내역이 있는 경우 새 로또 발급을 위해 엔터 키 입력 시 로또 UI가 갱신된다.", () => {
     cy.get("#purchase-amount-input").type(`10000{enter}`);
     cy.get("#purchase-amount-input").type(`90000{enter}`);
-    cy.get("#issuance-label").should("have.text", "총 10개를 구매하였습니다.");
+    cy.get("#issuance-label").should("have.text", "총 90개를 구매하였습니다.");
   });
 
   // click event
@@ -101,7 +106,7 @@ describe("lotto-domain-test", () => {
   it("로또 <span> UI의 당첨 번호 6개이고 중복 숫자가 없다. ", () => {
     cy.get("#purchase-amount-input").type(`10000{enter}`);
     cy.get(".lotto-detail").should((ticket) => {
-      ticket.toArray().map((number) => {
+      ticket.toArray().forEach((number) => {
         const set = new Set(number.textContent.split(","));
         expect(set.size).to.equal(6);
       });

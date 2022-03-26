@@ -1,5 +1,5 @@
 import { $ } from "../dom.js";
-import { LOTTO_PRICE, MESSAGE } from "../const.js";
+import { NUM, MESSAGE } from "../const.js";
 
 export default class PurchaseAmountForm {
   constructor() {
@@ -46,7 +46,7 @@ export default class PurchaseAmountForm {
     purchaseInputValue = purchaseInputValue;
     if (purchaseInputValue === "") return false;
 
-    if (purchaseInputValue % LOTTO_PRICE !== 0) {
+    if (purchaseInputValue % NUM.LOTTO_PRICE !== 0) {
       alert(MESSAGE.ALERT_LOTTO_PRICE);
       return false;
     }
@@ -55,7 +55,7 @@ export default class PurchaseAmountForm {
 
   updateLottoTickets = () => {
     this.lottoTickets = [];
-    this.lottoCount = this.purchasedAmount / LOTTO_PRICE;
+    this.lottoCount = this.purchasedAmount / NUM.LOTTO_PRICE;
 
     $(
       "#issuance-label"
@@ -72,13 +72,14 @@ export default class PurchaseAmountForm {
       .join("");
 
     this.$lottoTickets.classList.remove("flex-col");
+    this.$purchaseAmountInput.value = "";
   };
 
   autoNumberingLottoTicket() {
     this.lottoTickets.forEach((ticket) => {
       let lottoNumbers = [];
-      for (let j = 0; j < 6; j++) {
-        const randomNumber = Math.floor(Math.random() * 44) + 1;
+      for (let j = 0; j < NUM.LOTTO_NUM_COUNT; j++) {
+        const randomNumber = Math.floor(Math.random() * 45) + 1;
         lottoNumbers.includes(randomNumber)
           ? j--
           : lottoNumbers.push(randomNumber);
