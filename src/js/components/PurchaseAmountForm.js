@@ -7,7 +7,7 @@ export default class PurchaseAmountForm {
     this.$purchaseAmountInput = $("#purchase-amount-input");
     this.$purchaseResultButton = $("#purchase-amount-result-button");
     this.$lottoTickets = $("#issuance-lotto-tickets");
-    this.lottoTickets = [];
+    // this.lottoTickets = [];
 
     this.initEventListener();
     this.$purchaseAmountInput.focus();
@@ -94,7 +94,7 @@ export default class PurchaseAmountForm {
   lottoTicketTemplate = (item) => {
     return `<li class="mx-1 text-4xl lotto-wrapper">
           <span class="lotto-icon">🎟️</span>
-          <span class="lotto-detail" style="display: none;">${item.lottoNumbers}</span>
+          <span class="lotto-detail" style="display: none;" data-number="ticket">${item.lottoNumbers}</span>
       </li>`;
   };
 }
