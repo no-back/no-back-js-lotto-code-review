@@ -95,7 +95,30 @@ describe("lotto-domain-test", () => {
     cy.get(".lotto-numbers-toggle-button").should("not.be.checked");
   });
 
-  // it("로또 <span> UI의 당첨 번호는 1부터 45 사이 값이다. ", () => {});
+  it("로또 <span> UI의 당첨 번호는 1부터 45 사이 값이다. ", () => {
+    cy.get("#purchase-amount-input").type(10000);
+    cy.get("#purchase-amount-result-button").click();
+    cy.get("[data-number='ticket']").each(($ticketNumber) => {
+      $ticketNumber.toArray().map((number) => {
+        number.textContent.split(",").map((number) => {
+          expect(+number).to.be.closeTo(1, 45);
+        });
+      });
+    });
+  });
+
+  it("각 티켓의 랜덤 숫자들은 중복되지 않아야 한다.", () => {
+    cy.get("#purchase-amount-input").type(10000);
+    cy.get("#purchase-amount-result-button").click();
+    cy.get(".lotto-numbers-toggle-button").should("not.be.checked");
+    cy.get("[data-number='ticket']").each(($ticketNumber) => {
+      $ticketNumber.toArray().map((number) => {
+        const set = new Set(number.textContent.split(","));
+        expect(set.size).to.equal(6);
+      });
+    });
+  });
+
   it("로또 <span> UI의 당첨 번호 6개이고 중복 숫자가 없다. ", () => {
     cy.get("#purchase-amount-input").type(`10000{enter}`);
     cy.get(".lotto-detail").should((ticket) => {
