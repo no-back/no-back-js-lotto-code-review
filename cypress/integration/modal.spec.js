@@ -1,4 +1,4 @@
-import { NUM, MESSAGE } from "../../src/js/const.js";
+import { MESSAGE } from "../../src/js/const.js";
 
 describe("winning-result-modal-test", () => {
   beforeEach(() => {
@@ -7,6 +7,15 @@ describe("winning-result-modal-test", () => {
 
   const initLotto = () => {
     cy.get("#purchase-amount-input").type(`5000{enter}`);
+  };
+
+  const checkTypeEvent = (type) => {
+    if (type == "correct")
+      cy.get(".winning-number").first().type("1011121314151617");
+    else if (type == "outOfRange")
+      cy.get(".winning-number").first().type("10111213141550");
+    else if (type == "duplicatedValue")
+      cy.get(".winning-number").first().type("10111213141510");
   };
 
   it("당첨 번호 입력창은 세 자리 숫자 이상 입력할 수 없다. ", () => {
@@ -23,7 +32,7 @@ describe("winning-result-modal-test", () => {
 
   it("당첨 번호를 완성하고 결과 확인하기 버튼을 누르면 모달창을 띄운다. ", () => {
     initLotto();
-    cy.get(".winning-number").first().type("1011121314151617");
+    checkTypeEvent("correct");
     cy.get(".open-result-modal-button").click();
     cy.get(".open").should("exist");
   });
@@ -32,7 +41,7 @@ describe("winning-result-modal-test", () => {
     cy.on("window:alert", stub);
     initLotto();
 
-    cy.get(".winning-number").first().type("10111213141550");
+    checkTypeEvent("outOfRange");
     cy.get(".open-result-modal-button")
       .click()
       .then(() => {
@@ -46,7 +55,7 @@ describe("winning-result-modal-test", () => {
     cy.on("window:alert", stub);
     initLotto();
 
-    cy.get(".winning-number").first().type("10111213141510"); //autoskip
+    checkTypeEvent("duplicatedValue");
     cy.get(".open-result-modal-button")
       .click()
       .then(() => {
@@ -63,7 +72,7 @@ describe("winning-result-modal-test", () => {
   });
   it("다시 시작하기 버튼을 누르면 LottoApp 상태를 초기화한다. ", () => {
     initLotto();
-    cy.get(".winning-number").first().type("10111213141517");
+    checkTypeEvent("correct");
     cy.get(".open-result-modal-button").click();
     cy.get(".result-reset").click();
     cy.get("#issuance-result").should("not.exist");
