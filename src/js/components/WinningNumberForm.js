@@ -5,6 +5,7 @@ export default class WinningNumberForm {
   constructor() {
     this.$winningNumberForm = $("#winning-number-form");
     this.$winningNumberContainer = $("#winning-numbers-container");
+    // this.$allWinningNumbers = $$("[data-number='winning']");
     this.$winningNumbers = $$(".winning-number");
     this.$bonusNumber = $(".bonus-number");
     this.winningNumbers = [];
@@ -30,6 +31,19 @@ export default class WinningNumberForm {
     });
   }
   showWinningResultModal() {
+    const winningNumberSet = this.createWinningNumbers();
+    if (this.isDuplicatedWinningNumbers(winningNumberSet)) {
+      alert(MESSAGE.ALERT_LOTTO_DUPLICATED_NUMBER);
+      return;
+    }
+    this.winningNumbers = winningNumberSet; // TODO : Array <- Set?
+    this.compareLottoNumbers();
+
+    const WinningResultModal = new Modal(); // 모달창에 배열 데이터를 넘긴다.
+    WinningResultModal.onModalShow();
+  }
+
+  createWinningNumbers() {
     const winningNumberSet = new Set(
       [...this.$winningNumbers].map((node) => {
         return node.value;
@@ -38,19 +52,7 @@ export default class WinningNumberForm {
     const bonusValue = this.$bonusNumber.value;
     winningNumberSet.add(bonusValue);
 
-    if (this.isDuplicatedWinningNumbers(winningNumberSet)) {
-      alert(MESSAGE.ALERT_LOTTO_DUPLICATED_NUMBER);
-      return;
-    }
-    this.createWinningNumbers(winningNumberSet);
-    this.compareLottoNumbers();
-
-    const WinningResultModal = new Modal(); // 모달창에 배열 데이터를 넘긴다.
-    WinningResultModal.onModalShow();
-  }
-
-  createWinningNumbers(winningNumberSet) {
-    this.winningNumbers = winningNumberSet; // TODO : Array <- Set?
+    return winningNumberSet;
   }
 
   isDuplicatedWinningNumbers(winningNumberSet) {
@@ -61,6 +63,8 @@ export default class WinningNumberForm {
   compareLottoNumbers() {
     // 기존 로또티켓 번호와 당첨 번호를 비교한다
     //(input 이벤트마다 당첨결과 객체를 업데이트? 결과 확인 시에만 업데이트? 실시간 상태변경의 필요성..)
+    // const winningNumbers = this.winningNumbers;
+    // const lottoTickets = this.lottoTickets;
   }
 }
 // 다시 시작하기 버튼을 누르면 LottoApp 상태를 초기화한다.
