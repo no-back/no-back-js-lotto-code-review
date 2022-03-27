@@ -8,7 +8,9 @@ export default class PurchaseAmountForm {
     this.$purchaseResultButton = $("#purchase-amount-result-button");
     this.$lottoTickets = $("#issuance-lotto-tickets");
     this.lottoTickets = [];
+
     this.initEventListener();
+    this.$purchaseAmountInput.focus();
   }
 
   initEventListener() {

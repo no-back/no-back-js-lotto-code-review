@@ -2,9 +2,10 @@ import { $ } from "../dom.js";
 
 export default class Modal {
   constructor() {
-    this.$showResultButton = $(".open-result-modal-button");
     this.$modalClose = $(".modal-close");
     this.$modal = $(".modal");
+
+    this.$modalClose.addEventListener("click", () => this.onModalClose());
   }
   onModalShow() {
     this.$modal.classList.add("open");
@@ -12,10 +13,5 @@ export default class Modal {
 
   onModalClose() {
     this.$modal.classList.remove("open");
-  }
-
-  init() {
-    this.$showResultButton.addEventListener("click", onModalShow);
-    this.$modalClose.addEventListener("click", onModalClose);
   }
 }
