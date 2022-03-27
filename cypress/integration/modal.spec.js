@@ -24,6 +24,7 @@ describe("winning-result-modal-test", () => {
     cy.get(".winning-number").first().type("0");
     cy.get(".winning-number").first().should("have.value", "10");
   });
+
   it("당첨 번호 입력창은 두 자리 숫자 입력 시 다음 칸으로 focus가 넘어간다. ", () => {
     initLotto();
     cy.get(".winning-number").first().type("100");
@@ -36,20 +37,21 @@ describe("winning-result-modal-test", () => {
     cy.get(".open-result-modal-button").click();
     cy.get(".open").should("exist");
   });
-  it("당첨 번호 입력값이 1~45 사이 값이 아니면 alert 창을 띄운다. ", () => {
-    const stub = cy.stub();
-    cy.on("window:alert", stub);
-    initLotto();
 
-    checkTypeEvent("outOfRange");
-    cy.get(".open-result-modal-button")
-      .click()
-      .then(() => {
-        expect(stub.getCall(0)).to.be.calledWith(
-          MESSAGE.ALERT_WINNING_NUMBER_RANGE
-        );
-      });
+  it("당첨 번호를 완성하지 않고 결과 확인하기 버튼을 누르면 모달창을 띄우지 않는다. ", () => {
+    initLotto();
+    cy.get(".winning-number").first().type("1");
+    cy.get(".open-result-modal-button").click();
+    cy.get(".open").should("not.exist");
   });
+
+  it("당첨 번호 입력값이 1~45 사이 값이 아니면 모달창을 띄우지 않는다. ", () => {
+    initLotto();
+    checkTypeEvent("outOfRange");
+    cy.get(".open-result-modal-button").click();
+    cy.get(".open").should("not.exist");
+  });
+
   it("당첨 번호 입력창에 중복 숫자가 있는 상태에서 결과 확인하기 버튼을 누르면 alert 창을 띄운다. ", () => {
     const stub = cy.stub();
     cy.on("window:alert", stub);
@@ -64,12 +66,7 @@ describe("winning-result-modal-test", () => {
         );
       });
   });
-  it("당첨 번호를 완성하지 않고 결과 확인하기 버튼을 누르면 모달창을 띄우지 않는다. ", () => {
-    initLotto();
-    cy.get(".winning-number").first().type("1");
-    cy.get(".open-result-modal-button").click();
-    cy.get(".open").should("not.exist");
-  });
+
   it("다시 시작하기 버튼을 누르면 LottoApp 상태를 초기화한다. ", () => {
     initLotto();
     checkTypeEvent("correct");
