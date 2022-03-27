@@ -4,10 +4,7 @@ export default class IssuanceResultSection {
   constructor() {
     this.$lottoNumbersToggleButton = $(".lotto-numbers-toggle-button");
     this.$lottoTickets = $("#issuance-lotto-tickets");
-    this.init();
-  }
 
-  init() {
     this.$lottoNumbersToggleButton.addEventListener("click", (e) =>
       this.toggleLottoNumber()
     );
@@ -21,6 +18,6 @@ export default class IssuanceResultSection {
     );
     this.$lottoTickets.classList.toggle("flex-col");
 
-    // TODO : display, class 싱크 처리
+    // TODO : display, class 싱크 처리 (view 영역)
   }
 }

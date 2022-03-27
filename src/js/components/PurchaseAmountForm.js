@@ -8,10 +8,6 @@ export default class PurchaseAmountForm {
     this.$purchaseResultButton = $("#purchase-amount-result-button");
     this.$lottoTickets = $("#issuance-lotto-tickets");
     this.lottoTickets = [];
-    this.init();
-  }
-
-  init() {
     this.initEventListener();
   }
 
@@ -33,8 +29,8 @@ export default class PurchaseAmountForm {
       return;
     }
 
-    // 로또 발급 함수 호출
-    // 라벨 업데이트, 로또리스트 업데이트 분리
+    // TODO : 로또 발급 함수 호출
+    // TODO : 라벨 업데이트, 로또리스트 업데이트 분리
     this.lottoTickets = [];
     this.updateLottoTickets(purchaseInputValue);
 
@@ -60,7 +56,7 @@ export default class PurchaseAmountForm {
     this.createLottoTickets();
 
     this.$lottoTickets.classList.remove("flex-col");
-    this.$purchaseAmountInput.value = "";
+    this.$purchaseAmountInput.value = ""; // TODO : 초기화 함수화
   };
 
   updateIssuanceLabel(lottoCount) {

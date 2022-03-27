@@ -1,3 +1,5 @@
+import { $ } from "../dom.js";
+
 export default class Modal {
   constructor() {
     this.$showResultButton = $(".open-result-modal-button");
