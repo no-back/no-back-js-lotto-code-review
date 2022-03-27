@@ -1,13 +1,11 @@
-import { $ } from "../dom.js";
-import { NUM, MESSAGE } from "../const.js";
+import { $ } from "../utils/dom.js";
+import { NUM, MESSAGE } from "../utils/const.js";
 
 export default class PurchaseAmountForm {
   constructor() {
     this.$purchaseAmountForm = $("#purchase-amount-form");
     this.$purchaseAmountInput = $("#purchase-amount-input");
-    this.$purchaseResultButton = $("#purchase-amount-result-button");
     this.$lottoTickets = $("#issuance-lotto-tickets");
-    // this.lottoTickets = [];
 
     this.initEventListener();
     this.$purchaseAmountInput.focus();

@@ -1,6 +1,6 @@
-import PurchaseAmountForm from "./PurchaseAmountForm.js";
-import IssuanceResultSection from "./IssuanceResultSection.js";
-import WinningNumberForm from "./WinningNumberForm.js";
+import PurchaseAmountForm from "../components/PurchaseAmountForm.js";
+import IssuanceResultSection from "../components/IssuanceResultSection.js";
+import WinningNumberForm from "../components/WinningNumberForm.js";
 
 export default class LottoApp {
   constructor() {

@@ -1,3 +1,3 @@
-import LottoApp from "./components/LottoApp.js";
+import LottoApp from "./controller/LottoApp.js";
 
 document.addEventListener("DOMContentLoaded", () => new LottoApp());

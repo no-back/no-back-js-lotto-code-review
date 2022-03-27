@@ -1,4 +1,4 @@
-import { NUM, MESSAGE } from "../../src/js/const.js";
+import { NUM, MESSAGE } from "../../src/js/utils/const.js";
 
 describe("lotto-domain-test", () => {
   beforeEach(() => {

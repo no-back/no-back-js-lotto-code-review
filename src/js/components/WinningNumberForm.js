@@ -1,5 +1,5 @@
-import { $, $$ } from "../dom.js";
-import { NUM, MESSAGE } from "../const.js";
+import { $, $$ } from "../utils/dom.js";
+import { NUM, MESSAGE } from "../utils/const.js";
 import Modal from "./Modal.js";
 export default class WinningNumberForm {
   constructor() {

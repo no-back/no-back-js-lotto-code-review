@@ -1,4 +1,4 @@
-import { MESSAGE } from "../../src/js/const.js";
+import { MESSAGE } from "../../src/js/utils/const.js";
 
 describe("winning-result-modal-test", () => {
   beforeEach(() => {
