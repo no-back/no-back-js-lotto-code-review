@@ -69,9 +69,5 @@ export default class PurchasedLotto {
     if (this.$lottoNumbersToggleButton.checked === false) {
       this.hideNumbers();
     }
-
-    if (this.$lottoNumbersToggleButton.checked) {
-      this.showNumbers();
-    }
   }
 }

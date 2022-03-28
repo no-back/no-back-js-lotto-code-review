@@ -4,7 +4,7 @@ import {
   ALERT_MESSAGE,
 } from "../utils/constants.js";
 import { $, clearInputValue } from "../utils/DOM.js";
-export default class InputPurchaseAmount {
+export default class PurchaseAmountInput {
   constructor({ createLottoTickets }) {
     this.$purchaseForm = $(".purchase-form");
     this.$purchaseInput = $(".purchase-form__input");
@@ -46,5 +46,9 @@ export default class InputPurchaseAmount {
 
     if (purchaseAmount < LOTTO_PRICE)
       return ALERT_MESSAGE.PURCHASE_AMOUNT_IS_LOW;
+  }
+
+  reset() {
+    clearInputValue(this.$purchaseInput);
   }
 }
