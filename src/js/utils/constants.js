@@ -12,3 +12,8 @@ export const ALERT_MESSAGE = {
   PURCHASE_AMOUNT_HAS_CHANGE: (change) =>
     `입력된 금액에서 ${change}를 제외한 금액으로 로또를 구매하였습니다.\n거스름돈 ${change}원을 챙겨가세요.`,
 };
+
+export const WINNING_NUMBER_CHECK_MESSAGE = {
+  REDUPLICATED: "중복된 값이 있습니다. 확인 후 다시 입력해주세요.",
+  FULFILLED: '당첨번호 입력이 완료되었습니다. 인생역전의 기회, 지금 결과를 확인하세요.'
+};
