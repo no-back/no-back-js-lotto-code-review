@@ -21,27 +21,30 @@
                 id="input-price"
                 name="price"
                 class="w-100 mr-2 pl-2 purchase-form__input"
+                data-purchase-form="input"
                 placeholder="구입 금액"
                 min="1000"
                 max="100000"
                 required
               />
-              <button type="submit" class="btn btn-cyan purchase-form__button">
+              <button type="submit" class="btn btn-cyan purchase-form__button" data-purchase-form="button">
                 확인
               </button>
             </div>
           </form>
-          <section class="mt-9 purchased-lotto-section d-none">
+          <section class="mt-9 purchased-lotto-section d-none" data-purchased-lotto="section">
             <div class="d-flex">
-              <p class="flex-auto my-0 purchased-lotto-label"></p>
+              <p class="flex-auto my-0 purchased-lotto-label" data-purchased-lotto="amount"></p>
               <div class="flex-auto d-flex justify-end pr-1">
-                <label class="switch" for="toggle-number-show"">
-                  <input type="checkbox" class="lotto-numbers-toggle-button" id="toggle-number-show"/>
+                <label class="switch" data-toggle-switch="switch" for="toggle-number-show"">
+                  <input type="checkbox" class="lotto-numbers-toggle-button" 
+                  data-lotto-number-toggle="button"
+                  id="toggle-number-show"/>
                   <span class="text-base font-normal">번호보기</span>
                 </label>
               </div>
             </div>
-            <ul class="d-flex flex-wrap pl-0 lotto-ticket-container"></ul>
+            <ul class="d-flex flex-wrap pl-0 lotto-ticket-container" data-lotto-ticket="container"></ul>
           </section>
           <form class="mt-9 d-none" id="input-lotto-numbers" aria-labelledby="input-won-numbers">
             <label class="flex-auto d-inline-block mb-3" 

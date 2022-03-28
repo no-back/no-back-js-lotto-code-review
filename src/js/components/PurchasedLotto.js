@@ -42,7 +42,7 @@ export default class PurchasedLotto {
     return `
     <li class="mx-1 text-4xl d-flex items-center">
    🎟️
-      <span class="text-xl ml-5 d-none lotto-numbers">
+      <span class="text-xl ml-5 d-none lotto-numbers" data-lotto-numbers="span">
         ${lottoTicket.numbers.join(", ")}
       </span>
     </li>`;
