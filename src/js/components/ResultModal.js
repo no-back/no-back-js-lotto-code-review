@@ -57,7 +57,6 @@ export default class ResultModal {
       0
     );
     const loss = this.lottoTickets.length * LOTTO_PRICE;
-    console.log(profit, loss);
     const profitRate = getRealProfitRate(profit, loss);
     return profitRate % 1 !== 0
       ? +profitRate.toFixed(YIELD_DECIMAL_POINT)
@@ -74,7 +73,7 @@ export default class ResultModal {
       );
     }
   }
-
+  
   createTableBodyHTML() {
     return Object.keys(WINNING_PRIZE)
       .sort((a, b) => a - b)

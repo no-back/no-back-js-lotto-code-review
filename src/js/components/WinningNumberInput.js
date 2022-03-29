@@ -5,10 +5,10 @@ import {
   WINNING_NUMBER_CHECK_MESSAGE,
   WINNING_NUMBER_LENGTH,
 } from "../utils/constants.js";
-import { $, $$, disable, enable } from "../utils/DOM.js";
+import { $, $$, disable, enable, hide, show } from "../utils/DOM.js";
 
 export default class WinningNumberInput {
-  constructor({ updateWinningNumber, onShowModal }) {
+  constructor({ isVisible, updateWinningNumber, onShowModal }) {
     this.$winningNumberForm = $(".winning-number-form");
     this.$winningNumberInputList = $$(".winning-number");
     this.$bonusNumberInput = $(".bonus-number");
@@ -18,8 +18,10 @@ export default class WinningNumberInput {
     this.isFulfilled = false;
     this.winningNumber = {};
     this.checkMessage = "";
+    this.isVisible = isVisible;
     this.updateWinningNumber = updateWinningNumber;
     this.onShowModal = onShowModal;
+
     this.init();
   }
 
@@ -36,15 +38,16 @@ export default class WinningNumberInput {
 
   onChangeWinningNumberInput(e) {
     this.onHandleWinningInput(e, MAX_LOTTO_NUMBER_LENGTH);
+
     if (e.target.type != "number") return;
 
     const { winningNumbers, bonusNumber } = {
       winningNumbers: [
         ...e.currentTarget.querySelectorAll(".winning-number"),
-      ].map(($input) => +($input.value)),
+      ].map(($input) => $input.value),
       bonusNumber: e.currentTarget.querySelector(".bonus-number").value,
     };
-
+  
     const { isFulfilled, checkMessage } = this.validateWinningNumber(
       [...winningNumbers, bonusNumber].filter((v) => v !== "").map((v) => +v)
     );
@@ -54,7 +57,7 @@ export default class WinningNumberInput {
 
     this.setState({
       winningNumber: {
-        winningNumbers: winningNumbers,
+        winningNumbers: winningNumbers.map((v) => Number(v)),
         bonusNumber: +bonusNumber,
       },
     });
@@ -104,7 +107,11 @@ export default class WinningNumberInput {
     };
   }
 
-  setState({ isFulfilled, checkMessage, winningNumber }) {
+  setState({ isVisible, isFulfilled, checkMessage, winningNumber }) {
+    if (typeof isVisible === "boolean") {
+      this.isVisible = isVisible;
+      this.renderWinningInputForm();
+    }
     if (typeof isFulfilled === "boolean") {
       this.isFulfilled = isFulfilled;
     }
@@ -135,6 +142,16 @@ export default class WinningNumberInput {
 
     this.$winningNumberCheckMessage.classList.replace("text-red", "text-green");
     enable(this.$openResultModalButton);
+  }
+
+  renderWinningInputForm() {
+    if (!this.isVisible) {
+      hide(this.$winningNumberForm);
+      disable(this.$openResultModalButton);
+      this.$winningNumberCheckMessage.textContent = ""
+      return;
+    }
+    show(this.$winningNumberForm);
   }
 }
 

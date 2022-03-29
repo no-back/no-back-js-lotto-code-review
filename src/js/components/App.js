@@ -13,6 +13,7 @@ export default class App {
       createLottoTickets: this.createLottoTickets.bind(this),
     });
     this.winningNumberInput = new WinningNumberInput({
+      isVisible: false,
       updateWinningNumber: this.updateWinningNumber.bind(this),
       onShowModal: this.onShowModal.bind(this),
     });
@@ -33,6 +34,8 @@ export default class App {
   setState({ lottoTickets, winningNumber }) {
     if (lottoTickets) {
       this.lottoTickets = lottoTickets;
+      this.purchasedLotto.setState({ lottoTickets: this.lottoTickets });
+      this.winningNumberInput.setState({ isVisible: lottoTickets.length > 0 });
       this.resultModal.setState({ lottoTickets: this.lottoTickets });
     }
     if (winningNumber) {
@@ -41,13 +44,14 @@ export default class App {
     }
   }
 
-  createLottoTickets(numOfLotto) {
+  createLottoTickets(countOfLotto) {
+    this.showPurchasedLotto();
     this.setState({
-      lottoTickets: Array(numOfLotto)
+      lottoTickets: Array(countOfLotto)
         .fill()
         .map(() => new LottoTicket()),
     });
-    this.showPurchasedLotto();
+    
   }
 
   updateWinningNumber(winningNumber) {

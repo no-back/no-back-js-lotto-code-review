@@ -1,17 +1,17 @@
 import { PURCHASED_QUANTITY_MESSAGE } from "../utils/constants.js";
-import { $, $$ } from "../utils/DOM.js";
+import { $, $$, hide, show } from "../utils/DOM.js";
 export default class PurchasedLotto {
   constructor({ lottoTickets }) {
     this.$purchasedLottoSection = $(".purchased-lotto-section");
     this.$lottoTicketContainer = $(".lotto-ticket-container");
     this.$purchasedLottoLabel = $(".purchased-lotto-label");
     this.$lottoNumbersToggleButton = $(".lotto-numbers-toggle-button");
-    this.$lastWonLottoNumbersForm = $("#input-lotto-numbers");
     this.lottoTickets = lottoTickets;
 
     this.init();
     this.render();
   }
+
   init() {
     $(".switch").addEventListener("click", (e) =>
       this.onToggleShowingNumbers(e)
@@ -26,16 +26,17 @@ export default class PurchasedLotto {
   }
   showNumbers() {
     this.$lottoTicketContainer.classList.add("flex-col");
-    $$(".lotto-numbers").forEach(($lottoNumbers) =>
-      $lottoNumbers.classList.remove("d-none")
-    );
+    $$(".lotto-numbers").forEach(($lottoNumbers) => show($lottoNumbers));
   }
 
   hideNumbers() {
     this.$lottoTicketContainer.classList.remove("flex-col");
-    $$(".lotto-numbers").forEach(($lottoNumbers) =>
-      $lottoNumbers.classList.add("d-none")
-    );
+    $$(".lotto-numbers").forEach(($lottoNumbers) => hide($lottoNumbers));
+  }
+  reset() {
+    hide(this.$purchasedLottoSection);
+    this.$lottoNumbersToggleButton.checked = false;
+    this.hideNumbers();
   }
 
   createLottoTicketHTML(lottoTicket) {
@@ -56,11 +57,11 @@ export default class PurchasedLotto {
     const countOfLotto = this.lottoTickets.length;
 
     if (!countOfLotto) {
+      this.reset();
       return;
     }
 
-    this.$purchasedLottoSection.classList.remove("d-none");
-    this.$lastWonLottoNumbersForm.classList.remove("d-none");
+    show(this.$purchasedLottoSection);
     this.$purchasedLottoLabel.innerHTML =
       PURCHASED_QUANTITY_MESSAGE(countOfLotto);
     this.$lottoTicketContainer.innerHTML = this.lottoTickets
