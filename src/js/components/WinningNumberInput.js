@@ -1,10 +1,13 @@
-import { WINNING_NUMBER_CHECK_MESSAGE } from "../utils/constants.js";
-import { $, $$ } from "../utils/DOM.js";
+import {
+  WINNING_NUMBER_CHECK_MESSAGE,
+  WINNING_NUMBER_LENGTH,
+} from "../utils/constants.js";
+import { $, $$, disable, enable } from "../utils/DOM.js";
 
 export default class WinningNumberInput {
   constructor({ updateWinningNumber, onShowModal }) {
     this.$winningNumberForm = $(".winning-number-form");
-    this.$winningNumberInputs = $$("winning-number");
+    this.$winningNumberInputList = $$(".winning-number");
     this.$bonusNumberInput = $(".bonus-number");
     this.$winningNumberCheckMessage = $(".winning-number-check-message");
     this.$openResultModalButton = $(".open-result-modal-button");
@@ -22,10 +25,10 @@ export default class WinningNumberInput {
       "keyup",
       this.onChangeWinningNumberInput.bind(this)
     );
-    this.$openResultModalButton.addEventListener(
-      "click",
-      this.onShowModal.bind(this)
-    );
+    this.$openResultModalButton.addEventListener("submit", (e) => {
+      e.preventDefault();
+      this.onShowModal.bind(this);
+    });
   }
 
   onChangeWinningNumberInput(e) {
@@ -38,10 +41,10 @@ export default class WinningNumberInput {
       bonusNumber: e.currentTarget.querySelector(".bonus-number").value,
     };
 
-    const { isFulfilled } = this.validateWinningNumber(
+    const { isFulfilled, checkMessage } = this.validateWinningNumber(
       [...winningNumbers, bonusNumber].filter((v) => v !== "").map((v) => +v)
     );
-    this.setState({ isFulfilled });
+    this.setState({ isFulfilled, checkMessage });
 
     if (!this.isFulfilled) return;
 
@@ -61,7 +64,12 @@ export default class WinningNumberInput {
         checkMessage: WINNING_NUMBER_CHECK_MESSAGE.REDUPLICATED,
       };
     }
-
+    if (isLessThenLength(numbersWithoutBlank, WINNING_NUMBER_LENGTH)) {
+      return {
+        isFulfilled: false,
+        checkMessage: WINNING_NUMBER_CHECK_MESSAGE.LESS_THEN_LENGTH,
+      };
+    }
     return {
       isFulfilled: true,
       checkMessage: WINNING_NUMBER_CHECK_MESSAGE.FULFILLED,
@@ -88,7 +96,6 @@ export default class WinningNumberInput {
 
   renderCheckMessage() {
     this.$winningNumberCheckMessage.textContent = this.checkMessage;
-
     if (!this.isFulfilled) {
       this.$winningNumberCheckMessage.classList.replace(
         "text-green",
@@ -105,4 +112,8 @@ export default class WinningNumberInput {
 
 const hasReduplicatedElement = (list) => {
   return new Set(list).size !== list.length;
+};
+
+export const isLessThenLength = (list, expectedLength) => {
+  return list.length < expectedLength;
 };

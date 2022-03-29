@@ -22,12 +22,12 @@ export default class App {
       updateWinningNumber: this.updateWinningNumber.bind(this),
       onShowModal: this.onShowModal.bind(this),
     });
-    this.resultModal = new ResultModal({
-      isVisible: false,
-      lottoTickets: this.lottoTickets,
-      winningNumber: this.winningNumber,
-      onRestart: this.onRestart.bind(this),
-    });
+    // this.resultModal = new ResultModal({
+    //   isVisible: false,
+    //   lottoTickets: this.lottoTickets,
+    //   winningNumber: this.winningNumber,
+    //   onRestart: this.onRestart.bind(this),
+    // });
   }
 
   setState({ lottoTickets, winningNumber }) {
@@ -36,7 +36,7 @@ export default class App {
     }
     if (winningNumber) {
       this.winningNumber = winningNumber;
-      this.resultModal.setState({ winningNumber: this.winningNumber });
+      // this.resultModal.setState({ winningNumber: this.winningNumber });
     }
   }
 
