@@ -12,22 +12,22 @@ export default class App {
     this.purchaseAmountInput = new PurchaseAmountInput({
       createLottoTickets: this.createLottoTickets.bind(this),
     });
+    this.winningNumberInput = new WinningNumberInput({
+      updateWinningNumber: this.updateWinningNumber.bind(this),
+      onShowModal: this.onShowModal.bind(this),
+    });
+    this.resultModal = new ResultModal({
+      isVisible: false,
+      lottoTickets: this.lottoTickets,
+      winningNumber: this.winningNumber,
+      onRestart: this.onRestart.bind(this),
+    });
   }
 
   showPurchasedLotto() {
     this.purchasedLotto = new PurchasedLotto({
       lottoTickets: this.lottoTickets,
     });
-    this.winningNumberInput = new WinningNumberInput({
-      updateWinningNumber: this.updateWinningNumber.bind(this),
-      onShowModal: this.onShowModal.bind(this),
-    });
-    // this.resultModal = new ResultModal({
-    //   isVisible: false,
-    //   lottoTickets: this.lottoTickets,
-    //   winningNumber: this.winningNumber,
-    //   onRestart: this.onRestart.bind(this),
-    // });
   }
 
   setState({ lottoTickets, winningNumber }) {
@@ -36,7 +36,7 @@ export default class App {
     }
     if (winningNumber) {
       this.winningNumber = winningNumber;
-      // this.resultModal.setState({ winningNumber: this.winningNumber });
+      this.resultModal.setState({ winningNumber: this.winningNumber });
     }
   }
 
@@ -53,8 +53,8 @@ export default class App {
     this.setState({ winningNumber });
   }
 
-  onShowModal() {
-    this.resultModal.onShowModal();
+  onShowModal(e) {
+    this.resultModal.showModal(e);
   }
 
   onRestart() {
