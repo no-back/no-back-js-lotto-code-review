@@ -4,6 +4,7 @@ export const LOTTO_MIN_NUMBER = 1;
 export const LOTTO_MAX_NUMBER = 45;
 export const LOTTO_NUMBERS_LENGTH = 6;
 export const WINNING_NUMBER_LENGTH = 7;
+export const MAX_LOTTO_NUMBER_LENGTH = 2;
 export const PURCHASED_QUANTITY_MESSAGE = (countOfLotto) =>
   `총 ${countOfLotto}개를 구매하였습니다.`;
 
@@ -15,8 +16,8 @@ export const ALERT_MESSAGE = {
 };
 
 export const WINNING_NUMBER_CHECK_MESSAGE = {
+  OUT_OF_RANGE: `로또 숫자는 ${LOTTO_MIN_NUMBER}-${LOTTO_MAX_NUMBER} 사이의 값을 입력해주세요.`,
   REDUPLICATED: "중복된 값이 있습니다. 확인 후 다시 입력해주세요.",
-  LESS_THEN_LENGTH: '아직 입력하지 않은 번호가 있습니다.',
-  FULFILLED:
-    "당첨번호 입력이 완료되었습니다. 지금 결과를 확인하세요.",
+  LESS_THEN_LENGTH: "아직 입력하지 않은 번호가 있습니다.",
+  FULFILLED: "당첨번호 입력이 완료되었습니다. 지금 결과를 확인하세요.",
 };

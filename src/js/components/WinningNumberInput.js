@@ -1,4 +1,7 @@
 import {
+  LOTTO_MAX_NUMBER,
+  LOTTO_MIN_NUMBER,
+  MAX_LOTTO_NUMBER_LENGTH,
   WINNING_NUMBER_CHECK_MESSAGE,
   WINNING_NUMBER_LENGTH,
 } from "../utils/constants.js";
@@ -25,13 +28,14 @@ export default class WinningNumberInput {
       "keyup",
       this.onChangeWinningNumberInput.bind(this)
     );
-    this.$openResultModalButton.addEventListener("submit", (e) => {
-      e.preventDefault();
-      this.onShowModal.bind(this);
-    });
+    this.$winningNumberForm.addEventListener(
+      "submit",
+      this.onShowModal.bind(this)
+    );
   }
 
   onChangeWinningNumberInput(e) {
+    this.onHandleWinningInput(e, MAX_LOTTO_NUMBER_LENGTH);
     if (e.target.type != "number") return;
 
     const { winningNumbers, bonusNumber } = {
@@ -57,14 +61,38 @@ export default class WinningNumberInput {
     this.updateWinningNumber(this.winningNumber);
   }
 
-  validateWinningNumber(numbersWithoutBlank) {
-    if (hasReduplicatedElement(numbersWithoutBlank)) {
+  onHandleWinningInput(e, maxLength) {
+    if (!e.key.match(/^[0-9]$/)) return;
+    if (e.target.value.length > maxLength) {
+      e.target.value = e.target.value.substr(0, maxLength);
+    }
+    if (
+      e.target.value.length >= 2 &&
+      e.target.value <= LOTTO_MAX_NUMBER &&
+      e.target.nextElementSibling
+    ) {
+      e.target.nextElementSibling.focus();
+    }
+  }
+  validateWinningNumber(numberListWithoutBlank) {
+    if (
+      hasElementOutOfRange(numberListWithoutBlank, {
+        min: LOTTO_MIN_NUMBER,
+        max: LOTTO_MAX_NUMBER,
+      })
+    ) {
+      return {
+        isFulfilled: false,
+        checkMessage: WINNING_NUMBER_CHECK_MESSAGE.OUT_OF_RANGE,
+      };
+    }
+    if (hasReduplicatedElement(numberListWithoutBlank)) {
       return {
         isFulfilled: false,
         checkMessage: WINNING_NUMBER_CHECK_MESSAGE.REDUPLICATED,
       };
     }
-    if (isLessThenLength(numbersWithoutBlank, WINNING_NUMBER_LENGTH)) {
+    if (isLessThenLength(numberListWithoutBlank, WINNING_NUMBER_LENGTH)) {
       return {
         isFulfilled: false,
         checkMessage: WINNING_NUMBER_CHECK_MESSAGE.LESS_THEN_LENGTH,
@@ -110,10 +138,14 @@ export default class WinningNumberInput {
   }
 }
 
+const hasElementOutOfRange = (list, { min, max }) => {
+  return list.some((element) => element < min || element > max);
+};
+
 const hasReduplicatedElement = (list) => {
   return new Set(list).size !== list.length;
 };
 
-export const isLessThenLength = (list, expectedLength) => {
+const isLessThenLength = (list, expectedLength) => {
   return list.length < expectedLength;
 };
