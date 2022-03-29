@@ -26,7 +26,6 @@ export default class LottoTicket {
 
   setTotalMatchCount({ winningNumbers, bonusNumber }) {
     const totalMatchCount = this.getWinningNumbersMatchCount(winningNumbers);
-
     this.totalMatchCount =
       totalMatchCount === BONUS_CHECK_REQUIRED_COUNT
         ? totalMatchCount + this.getBonusNumberMatchCount(bonusNumber)
@@ -35,7 +34,8 @@ export default class LottoTicket {
 
   getWinningNumbersMatchCount(winningNumbers) {
     return this.lottoNumberList.reduce(
-      (acc, num) => acc + +(winningNumbers.includes(num), 0)
+      (acc, num) => acc + winningNumbers.includes(num),
+      0
     );
   }
 

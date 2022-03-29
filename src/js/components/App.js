@@ -33,6 +33,7 @@ export default class App {
   setState({ lottoTickets, winningNumber }) {
     if (lottoTickets) {
       this.lottoTickets = lottoTickets;
+      this.resultModal.setState({ lottoTickets: this.lottoTickets });
     }
     if (winningNumber) {
       this.winningNumber = winningNumber;

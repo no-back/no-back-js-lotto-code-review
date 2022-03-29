@@ -41,7 +41,7 @@ export default class WinningNumberInput {
     const { winningNumbers, bonusNumber } = {
       winningNumbers: [
         ...e.currentTarget.querySelectorAll(".winning-number"),
-      ].map(($input) => $input.value),
+      ].map(($input) => +($input.value)),
       bonusNumber: e.currentTarget.querySelector(".bonus-number").value,
     };
 
@@ -54,7 +54,7 @@ export default class WinningNumberInput {
 
     this.setState({
       winningNumber: {
-        winningNumbers: winningNumbers.map((v) => +v),
+        winningNumbers: winningNumbers,
         bonusNumber: +bonusNumber,
       },
     });

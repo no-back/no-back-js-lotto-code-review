@@ -21,3 +21,35 @@ export const WINNING_NUMBER_CHECK_MESSAGE = {
   LESS_THEN_LENGTH: "아직 입력하지 않은 번호가 있습니다.",
   FULFILLED: "당첨번호 입력이 완료되었습니다. 지금 결과를 확인하세요.",
 };
+
+export const YIELD_MESSAGE = (rate) => `당신의 총 수익률은 ${rate}% 입니다.`;
+export const YIELD_DECIMAL_POINT = 2;
+
+export const BONUS_COUNT = 0.5;
+export const BONUS_CHECK_REQUIRED_COUNT = 5;
+export const WINNING_PRIZE = {
+  3: {
+    PRIZE: 5000,
+    DESCRIPTION: "3개",
+  },
+  4: {
+    PRIZE: 50000,
+    DESCRIPTION: "4개",
+  },
+  5: {
+    PRIZE: 1500000,
+    DESCRIPTION: "5개",
+  },
+  5.5: {
+    PRIZE: 30000000,
+    DESCRIPTION: "5개 + 보너스볼",
+  },
+  6: {
+    PRIZE: 2000000000,
+    DESCRIPTION: "6개",
+  },
+};
+
+export const GET_PRIZE = (count) => {
+  return WINNING_PRIZE[count]?.PRIZE ?? 0;
+};
