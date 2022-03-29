@@ -77,14 +77,14 @@ export default class ResultModal {
 
   createTableBodyHTML() {
     return Object.keys(WINNING_PRIZE)
+      .sort((a, b) => a - b)
       .map((key) => {
         const { DESCRIPTION, PRIZE } = WINNING_PRIZE[key];
-
         return this.createTableRowHTML({
           DESCRIPTION,
           PRIZE,
           countOfWinningLotto: this.lottoTickets.filter(
-            (lottoTicket) => lottoTicket.totalMatchCount === key
+            (lottoTicket) => lottoTicket.totalMatchCount === +key
           ).length,
         });
       })
