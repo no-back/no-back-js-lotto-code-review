@@ -71,7 +71,7 @@ describe("winning-result-modal-test", () => {
     initLotto();
     checkTypeEvent("correct");
     cy.get(".open-result-modal-button").click();
-    cy.get(".result-reset").click();
-    cy.get("#issuance-result").should("not.exist");
+    cy.get(".restart-button").click();
+    cy.get(".lotto-wrapper").should("not.exist");
   });
 });
