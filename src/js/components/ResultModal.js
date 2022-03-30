@@ -27,9 +27,20 @@ export default class ResultModal {
 
   init() {
     this.$modalClose.addEventListener("click", this.closeModal.bind(this));
+    this.$modalClose.addEventListener("keyup", (e) => {
+      if (e.key === "Enter") {
+        this.closeModal();
+      }
+    });
     this.$resetButton.addEventListener("click", () => {
       this.onRestart();
       this.closeModal();
+    });
+    this.$resetButton.addEventListener("keyup", (e) => {
+      if (e.key === "Enter") {
+        this.onRestart();
+        this.closeModal();
+      }
     });
   }
 
@@ -73,7 +84,7 @@ export default class ResultModal {
       );
     }
   }
-  
+
   createTableBodyHTML() {
     return Object.keys(WINNING_PRIZE)
       .sort((a, b) => a - b)
