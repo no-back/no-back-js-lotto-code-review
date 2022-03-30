@@ -1,4 +1,3 @@
-import { getRandomNumber } from "../utils/utils.js";
 import {
   LOTTO_MIN_NUMBER,
   LOTTO_MAX_NUMBER,
@@ -43,3 +42,7 @@ export default class LottoTicket {
     return this.lottoNumberList.includes(bonusNumber) ? BONUS_COUNT : 0;
   }
 }
+
+const getRandomNumber = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
