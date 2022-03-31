@@ -48,7 +48,7 @@
             </div>
             <ul class="d-flex flex-wrap pl-0 lotto-ticket-container" data-lotto-ticket="container"></ul>
           </section>
-          <form class="mt-9 d-none winning-number-form" id="input-lotto-numbers" aria-labelledby="input-won-numbers">
+          <form class="mt-9 d-none winning-number-form" id="input-lotto-numbers" aria-labelledby="input-won-numbers" data-winning-number="form">
             <label class="flex-auto d-inline-block mb-3" 
               >지난 주 당첨번호 6개와 보너스 넘버 1개를 입력해주세요.</label
             >
@@ -62,6 +62,7 @@
                     min="1"
                     max="45"
                     required
+                    data-input="winning-number-input"
                   />
                   <input
                     type="number"
@@ -69,6 +70,7 @@
                     min="1"
                     max="45"
                     required
+                    data-input="winning-number-input"
                   />
                   <input
                     type="number"
@@ -76,6 +78,7 @@
                     min="1"
                     max="45"
                     required
+                    data-input="winning-number-input"
                   />
                   <input
                     type="number"
@@ -83,6 +86,7 @@
                     min="1"
                     max="45"
                     required
+                    data-input="winning-number-input"
                   />
                   <input
                     type="number"
@@ -90,6 +94,7 @@
                     min="1"
                     max="45"
                     required
+                    data-input="winning-number-input"
                   />
                   <input
                     type="number"
@@ -97,6 +102,7 @@
                     min="1"
                     max="45"
                     required
+                    data-input="winning-number-input"
                   />
                 </div>
               </div>
@@ -105,14 +111,14 @@
                 <div class="d-flex justify-center">
                   <input type="number" class="bonus-number text-center" min="1"
                     max="45" 
-                    required/>
+                    required data-winning-number="bonus-number" />
                 </div>
               </div>
             </div>
-            <div class="winning-number-check-message mt-3 text-sm text-red h-2r spacing-sm"></div>
+            <div class="winning-number-check-message mt-3 text-sm text-red h-2r spacing-sm" data-winning-number="check-message"></div>
             <button
               type="submit"
-              class="open-result-modal-button mt-5 btn btn-cyan w-100" disabled>
+              class="open-result-modal-button mt-5 btn btn-cyan w-100" data-button="modal-open-button" disabled>
               결과 확인하기
             </button>
           </form>
