@@ -112,8 +112,33 @@ describe("당첨 번호 입력 검사", () => {
     cy.get('[data-button="modal-open-button"]').should("be.disabled");
   });
 
-  
+  it("입력된 번호가 올바를 경우, 입력칸 하단에 결과 확인 가능 메세지를 표시한다.", () => {
+    const winningNumberList = shuffle([1, 5, 15, 35, 45, 22]);
+    const bonusNumber = 19;
+    const { FULFILLED, LESS_THEN_LENGTH } = WINNING_NUMBER_CHECK_MESSAGE;
 
+    cy.get('[data-input="winning-number-input"]').each(($el, index) => {
+      cy.wrap($el).type(winningNumberList[index]);
+      cy.get('[data-button="modal-open-button"]').should("be.disabled");
+      cy.get('[data-winning-number="check-message"]').should(
+        "have.text",
+        LESS_THEN_LENGTH
+      );
+      cy.get('[data-winning-number="check-message"]').should(
+        "have.class",
+        "text-red"
+      );
+    });
+    cy.get('[data-winning-number="bonus-number"]').type(bonusNumber);
+    cy.get('[data-winning-number="check-message"]').should(
+      "have.text",
+      FULFILLED
+    );
+    cy.get('[data-winning-number="check-message"]').should(
+      "have.class",
+      "text-green"
+    );
+  });
 });
 
 function shuffle(array) {
