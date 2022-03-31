@@ -3,25 +3,24 @@ import {
   LOTTO_PRICE,
   WINNING_NUMBER_CHECK_MESSAGE,
 } from "../../src/js/utils/constants";
-
+const MIN = 1;
+const MAX = 100;
+const validPurchaseAmount =
+  (Math.floor(Math.random() * (MAX - MIN)) + MIN) * LOTTO_PRICE;
+const inValidPurchaseAmount = Math.floor(Math.random() * 1000);
+const inputPurchaseAmount = (bool) => {
+  if (bool) {
+    cy.get("[data-purchase-form='input']")
+      .type(validPurchaseAmount)
+      .type("{enter}");
+  } else {
+    cy.get("[data-purchase-form='input']")
+      .type(inValidPurchaseAmount)
+      .type("{enter}");
+  }
+};
+Cypress.Commands.add("submitValue", (bool) => inputPurchaseAmount(bool));
 describe("당첨 번호 입력 검사", () => {
-  const MIN = 1;
-  const MAX = 100;
-  const validPurchaseAmount =
-    (Math.floor(Math.random() * (MAX - MIN)) + MIN) * LOTTO_PRICE;
-  const inValidPurchaseAmount = Math.floor(Math.random() * 1000);
-  const inputPurchaseAmount = (bool) => {
-    if (bool) {
-      cy.get("[data-purchase-form='input']")
-        .type(validPurchaseAmount)
-        .type("{enter}");
-    } else {
-      cy.get("[data-purchase-form='input']")
-        .type(inValidPurchaseAmount)
-        .type("{enter}");
-    }
-  };
-  Cypress.Commands.add("submitValue", (bool) => inputPurchaseAmount(bool));
   beforeEach(() => {
     cy.visit("/");
     cy.submitValue(true);
@@ -119,15 +118,6 @@ describe("당첨 번호 입력 검사", () => {
 
     cy.get('[data-input="winning-number-input"]').each(($el, index) => {
       cy.wrap($el).type(winningNumberList[index]);
-      cy.get('[data-button="modal-open-button"]').should("be.disabled");
-      cy.get('[data-winning-number="check-message"]').should(
-        "have.text",
-        LESS_THEN_LENGTH
-      );
-      cy.get('[data-winning-number="check-message"]').should(
-        "have.class",
-        "text-red"
-      );
     });
     cy.get('[data-winning-number="bonus-number"]').type(bonusNumber);
     cy.get('[data-winning-number="check-message"]').should(
@@ -137,6 +127,26 @@ describe("당첨 번호 입력 검사", () => {
     cy.get('[data-winning-number="check-message"]').should(
       "have.class",
       "text-green"
+    );
+  });
+
+  it("모든 번호가 올바르게 입력된 후 입력한 숫자를 지우면, 입력칸 하단에 재입력 요청 메세지를 표시한다.", () => {
+    const winningNumberList = shuffle([1, 5, 15, 35, 45, 22]);
+    const bonusNumber = 7;
+    const { FULFILLED, LESS_THEN_LENGTH } = WINNING_NUMBER_CHECK_MESSAGE;
+
+    cy.get('[data-input="winning-number-input"]').each(($el, index) => {
+      cy.wrap($el).type(winningNumberList[index]);
+    });
+    cy.get('[data-winning-number="bonus-number"]').type(bonusNumber);
+    cy.get('[data-winning-number="check-message"]').should(
+      "have.text",
+      FULFILLED
+    );
+    cy.get('[data-winning-number="bonus-number"]').type("{backspace}");
+    cy.get('[data-winning-number="check-message"]').should(
+      "have.text",
+      LESS_THEN_LENGTH
     );
   });
 });
@@ -150,3 +160,42 @@ function shuffle(array) {
   }
   return array;
 }
+
+const winningNumberObj = {
+  winningNumberList: [1, 2, 3, 4, 5, 6],
+  bonusNumber: 7,
+};
+
+const inputAndClickModalButton = () => {
+  const { winningNumberList, bonusNumber } = winningNumberObj;
+
+  cy.get('[data-input="winning-number-input"]').each(($el, index) => {
+    cy.wrap($el).type(winningNumberList[index]);
+  });
+  cy.get('[data-winning-number="bonus-number"]').type(bonusNumber);
+  cy.get('[data-button="modal-open-button"]').click();
+};
+Cypress.Commands.add("clickModalButton", inputAndClickModalButton);
+
+describe("당첨 결과 모달 검사", () => {
+  beforeEach(() => {
+    cy.visit("/");
+    cy.submitValue(true);
+  });
+
+  it("로또 구매 및 당첨 번호 입력을 마치고 결과확인 버튼을 클릭하면 당첨 결과 모달이 표시된다.", () => {
+    cy.clickModalButton();
+    cy.get('[data-modal="modal-section"]').should("be.visible");
+  });
+  it("다시 시작하기 버튼을 클릭하면, 모달이 사라지고 화면이 초기화된다.", () => {
+    cy.clickModalButton();
+    cy.get('[data-reset="reset-button"]').click();
+    cy.get('[data-modal="modal-section"]').should("not.be.visible");
+    cy.get('[data-winning-number="form"]').should("not.be.visible");
+    cy.get('[data-purchase-form="input"]').should("have.text", "");
+    cy.get('[data-lotto-number-toggle="button"]').should("not.be.checked");
+    cy.get('[data-input="winning-number-input"]').each(($el) => {
+      cy.wrap($el).should("have.text", "");
+    });
+  });
+});
