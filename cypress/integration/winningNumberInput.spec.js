@@ -90,6 +90,28 @@ describe("당첨 번호 입력 검사", () => {
     cy.get('[data-button="modal-open-button"]').should("be.disabled");
   });
 
+  it("입력된 번호에 중복값이 존재할 경우, 입력칸 하단에 재입력 요청 메세지를 표시한다.", () => {
+    const inValidWinningNumberList = shuffle([9, 12, 23, 25, 23, 33]);
+    const bonusNumber = 44;
+    const inputNumberList = [];
+    const { REDUPLICATED } = WINNING_NUMBER_CHECK_MESSAGE;
+    cy.get('[data-input="winning-number-input"]').each(($el, index) => {
+      cy.wrap($el).type(inValidWinningNumberList[index]);
+      if (inputNumberList.includes(inValidWinningNumberList[index])) {
+        cy.get('[data-winning-number="check-message"]').should(
+          "have.text",
+          REDUPLICATED
+        );
+        cy.get('[data-winning-number="check-message"]').should(
+          "have.class",
+          "text-red"
+        );
+      } else inputNumberList.push(inValidWinningNumberList[index]);
+    });
+    cy.get('[data-winning-number="bonus-number"]').type(bonusNumber);
+    cy.get('[data-button="modal-open-button"]').should("be.disabled");
+  });
+
   
 
 });
