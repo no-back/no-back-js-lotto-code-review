@@ -67,6 +67,29 @@ describe("당첨 번호 입력 검사", () => {
     cy.get('[data-winning-number="bonus-number"]').type(inValidBonusNumber);
     cy.get('[data-button="modal-open-button"]').should("not.be.disabled");
   });
+  it("입력된 번호가 1~45 범위가 아니면, 입력칸 하단에 재입력 요청 메세지를 표시한다.", () => {
+    const inValidWinningNumberList = shuffle([77, 1, 2, 4, 5, 6]);
+    const validBonusNumber = 1;
+    const { OUT_OF_RANGE } = WINNING_NUMBER_CHECK_MESSAGE;
+
+    cy.get('[data-input="winning-number-input"]').each(($el, index) => {
+      cy.wrap($el).type(inValidWinningNumberList[index]);
+      cy.get('[data-button="modal-open-button"]').should("be.disabled");
+      if (inValidWinningNumberList[index] > LOTTO_MAX_NUMBER) {
+        cy.get('[data-winning-number="check-message"]').should(
+          "have.text",
+          OUT_OF_RANGE
+        );
+        cy.get('[data-winning-number="check-message"]').should(
+          "have.class",
+          "text-red"
+        );
+      }
+    });
+    cy.get('[data-winning-number="bonus-number"]').type(validBonusNumber);
+    cy.get('[data-button="modal-open-button"]').should("be.disabled");
+  });
+
   
 
 });
