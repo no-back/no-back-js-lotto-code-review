@@ -1,6 +1,7 @@
 import {
   GET_PRIZE,
   LOTTO_PRICE,
+  WINNING_COUNT_LIST,
   WINNING_PRIZE,
   YIELD_DECIMAL_POINT,
   YIELD_MESSAGE,
@@ -89,19 +90,16 @@ export default class ResultModal {
   }
 
   createTableBodyHTML() {
-    return Object.keys(WINNING_PRIZE)
-      .sort((a, b) => a - b)
-      .map((key) => {
-        const { DESCRIPTION, PRIZE } = WINNING_PRIZE[key];
-        return this.createTableRowHTML({
-          DESCRIPTION,
-          PRIZE,
-          countOfWinningLotto: this.lottoTickets.filter(
-            (lottoTicket) => lottoTicket.totalMatchCount === +key
-          ).length,
-        });
-      })
-      .join("");
+    return WINNING_COUNT_LIST.map((key) => {
+      const { DESCRIPTION, PRIZE } = WINNING_PRIZE[key];
+      return this.createTableRowHTML({
+        DESCRIPTION,
+        PRIZE,
+        countOfWinningLotto: this.lottoTickets.filter(
+          (lottoTicket) => lottoTicket.totalMatchCount === +key
+        ).length,
+      });
+    }).join("");
   }
 
   createTableRowHTML({ DESCRIPTION, PRIZE, countOfWinningLotto }) {

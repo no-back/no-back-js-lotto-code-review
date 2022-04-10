@@ -27,6 +27,7 @@ export const YIELD_DECIMAL_POINT = 2;
 
 export const BONUS_COUNT = 0.5;
 export const BONUS_CHECK_REQUIRED_COUNT = 5;
+export const WINNING_COUNT_LIST = [3, 4, 5, 5.5, 6];
 export const WINNING_PRIZE = {
   3: {
     PRIZE: 5000,
