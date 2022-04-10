@@ -14,11 +14,15 @@ describe("구매 금액 입력", () => {
     const purchaseAmount = Math.floor(Math.random() * 1000);
     cy.get("[data-purchase-form='input']").type(purchaseAmount);
     cy.get("[data-purchase-form='button']").click();
-    cy.get("[data-purchased-lotto='section']").should("have.css", "display", "none");
+    cy.get("[data-purchased-lotto='section']").should(
+      "have.css",
+      "display",
+      "none"
+    );
   });
   it("입력된 금액이 1000원 초과일 경우, 1000 단위로 나누어 떨어지지 않는다면 alert로 거스름돈 금액을 알려주고 구매한 로또는 표시한다.", () => {
-    const MIN = 1000;
-    const MAX = 100000;
+    const MIN = 1001;
+    const MAX = 1999;
     const amountWithChange = Math.floor(Math.random() * (MAX - MIN)) + MIN;
     const change = amountWithChange % LOTTO_PRICE;
     const alertStub = cy.stub();
@@ -35,5 +39,12 @@ describe("구매 금액 입력", () => {
           );
         }
       });
+  });
+  it("입력된 금액이 로또 주문 금액으로 나눠질 경우, 확인 버튼을 누름과 동시에 로또 구매가 가능하다.", () => {
+    const MIN = 1000;
+    const MAX_COUNT = 100;
+    const purchaseAmount = Math.floor(Math.random() * MAX_COUNT) * 1000 + MIN;
+    cy.get("[data-purchase-form='input']").type(purchaseAmount).type("{enter}");
+    cy.get("[data-purchased-lotto='section']").should("be.visible");
   });
 });
