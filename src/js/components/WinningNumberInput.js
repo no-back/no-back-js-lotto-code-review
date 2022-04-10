@@ -47,7 +47,7 @@ export default class WinningNumberInput {
       ].map(($input) => $input.value),
       bonusNumber: e.currentTarget.querySelector(".bonus-number").value,
     };
-  
+
     const { isFulfilled, checkMessage } = this.validateWinningNumber(
       [...winningNumbers, bonusNumber].filter((v) => v !== "").map((v) => +v)
     );
@@ -75,6 +75,9 @@ export default class WinningNumberInput {
       e.target.nextElementSibling
     ) {
       e.target.nextElementSibling.focus();
+    }
+    if (lastSibling(e.target)?.value.length >= 2) {
+      $("#bonus-number").focus()
     }
   }
   validateWinningNumber(numberListWithoutBlank) {
@@ -148,7 +151,7 @@ export default class WinningNumberInput {
     if (!this.isVisible) {
       hide(this.$winningNumberForm);
       disable(this.$openResultModalButton);
-      this.$winningNumberCheckMessage.textContent = ""
+      this.$winningNumberCheckMessage.textContent = "";
       return;
     }
     show(this.$winningNumberForm);
@@ -166,3 +169,11 @@ const hasReduplicatedElement = (list) => {
 const isLessThenLength = (list, expectedLength) => {
   return list.length < expectedLength;
 };
+
+function lastSibling(node) {
+  let tempObj = node.parentNode.lastChild;
+  while (tempObj.nodeType != 1 && tempObj.previousSibling != null) {
+    tempObj = tempObj.previousSibling;
+  }
+  return tempObj.nodeType == 1 ? tempObj : false;
+}
