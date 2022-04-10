@@ -77,7 +77,7 @@ export default class WinningNumberInput {
       e.target.nextElementSibling.focus();
     }
     if (lastSibling(e.target)?.value.length >= 2) {
-      $("#bonus-number").focus()
+      $("#bonus-number").focus();
     }
   }
   validateWinningNumber(numberListWithoutBlank) {
@@ -170,10 +170,10 @@ const isLessThenLength = (list, expectedLength) => {
   return list.length < expectedLength;
 };
 
-function lastSibling(node) {
+const lastSibling = (node) => {
   let tempObj = node.parentNode.lastChild;
   while (tempObj.nodeType != 1 && tempObj.previousSibling != null) {
     tempObj = tempObj.previousSibling;
   }
   return tempObj.nodeType == 1 ? tempObj : false;
-}
+};
