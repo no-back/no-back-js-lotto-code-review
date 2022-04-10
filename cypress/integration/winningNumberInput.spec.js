@@ -35,13 +35,13 @@ describe("당첨 번호 입력 검사", () => {
   });
 
   it("당첨번호를 2자리 이상 입력할 경우 마지막 input을 제외하고 다음 input으로 이동한다.", () => {
-    const inValidWinningNumberList = [12, 22, 23, 25, 26];
+    const winningNumberList = [12, 22, 23, 25, 26];
     cy.get('[data-input="winning-number-input"]')
       .then(($inputList) => {
         return $inputList.slice(0, 4);
       })
       .each(($el, index) => {
-        cy.wrap($el).type(inValidWinningNumberList[index]);
+        cy.wrap($el).type(winningNumberList[index]);
         cy.wrap($el).next().should("have.focus");
       });
   });
