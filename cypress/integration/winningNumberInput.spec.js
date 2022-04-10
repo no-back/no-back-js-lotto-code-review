@@ -34,16 +34,18 @@ describe("당첨 번호 입력 검사", () => {
     cy.get('[data-button="modal-open-button"]').should("be.disabled");
   });
 
-  it("당첨번호를 2자리 이상 입력할 경우 마지막 input을 제외하고 다음 input으로 이동한다.", () => {
-    const winningNumberList = [12, 22, 23, 25, 26];
+  it("당첨번호를 2자리 이상 입력할 경우 다음 input으로 이동한다.", () => {
+    const winningNumberList = [12, 22, 23, 25, 26, 27];
     cy.get('[data-input="winning-number-input"]')
       .then(($inputList) => {
-        return $inputList.slice(0, 4);
+        return $inputList.slice(0, 5);
       })
       .each(($el, index) => {
         cy.wrap($el).type(winningNumberList[index]);
         cy.wrap($el).next().should("have.focus");
       });
+    cy.get("[data-id='last-winning-input']").type(winningNumberList[5]);
+    cy.get('[data-winning-number="bonus-number"]').should("have.focus");
   });
 
   it("6개의 당첨번호와 1개의 보너스 번호가 모두 정상 입력되어야 결과 확인 버튼이 활성화된다.", () => {
