@@ -1,3 +1,11 @@
+.text-red {
+  color: rgb(215, 0, 21);
+}
+
+.text-green {
+  color: rgb(0, 125, 27);
+}
+
 .text-left {
   text-align: left;
 }

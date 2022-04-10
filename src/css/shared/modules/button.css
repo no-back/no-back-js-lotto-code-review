@@ -16,3 +16,8 @@
 .btn.btn-cyan:hover {
   background-color: #018c9e !important;
 }
+
+.btn.btn-cyan:disabled {
+  background-color: #00bcd4 !important;
+  cursor: not-allowed;
+}
