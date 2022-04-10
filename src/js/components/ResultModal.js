@@ -46,20 +46,23 @@ export default class ResultModal {
 
   showModal(e) {
     e.preventDefault();
-    this.setState({ isVisible: true });
+    this.changeStateAndView({ isVisible: true });
   }
 
   closeModal() {
-    this.setState({ isVisible: false });
+    this.changeStateAndView({ isVisible: false });
+  }
+
+  changeStateAndView({ isVisible, lottoTickets, winningNumber }) {
+    this.setState({ isVisible, lottoTickets, winningNumber });
+    this.setTotalMatchCountList();
+    this.render();
   }
 
   setState({ isVisible, lottoTickets, winningNumber }) {
     this.isVisible = isVisible ?? this.isVisible;
     this.lottoTickets = lottoTickets ?? this.lottoTickets;
     this.winningNumber = winningNumber ?? this.winningNumber;
-
-    this.setTotalMatchCountList();
-    this.render();
   }
 
   getMeaningProfitRate() {

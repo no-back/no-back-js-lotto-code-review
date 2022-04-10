@@ -49,9 +49,13 @@ export default class PurchasedLotto {
     </li>`;
   }
 
+  changeStateAndView({ lottoTickets }) {
+    this.setState({ lottoTickets })
+    this.render()
+  }
+
   setState({ lottoTickets }) {
     this.lottoTickets = lottoTickets;
-    this.render();
   }
   render() {
     const countOfLotto = this.lottoTickets.length;

@@ -34,13 +34,17 @@ export default class App {
   setState({ lottoTickets, winningNumber }) {
     if (lottoTickets) {
       this.lottoTickets = lottoTickets;
-      this.purchasedLotto.setState({ lottoTickets: this.lottoTickets });
+      this.purchasedLotto.changeStateAndView({
+        lottoTickets: this.lottoTickets,
+      });
       this.winningNumberInput.setState({ isVisible: lottoTickets.length > 0 });
-      this.resultModal.setState({ lottoTickets: this.lottoTickets });
+      this.resultModal.changeStateAndView({ lottoTickets: this.lottoTickets });
     }
     if (winningNumber) {
       this.winningNumber = winningNumber;
-      this.resultModal.setState({ winningNumber: this.winningNumber });
+      this.resultModal.changeStateAndView({
+        winningNumber: this.winningNumber,
+      });
     }
   }
 
@@ -51,7 +55,6 @@ export default class App {
         .fill()
         .map(() => new LottoTicket()),
     });
-    
   }
 
   updateWinningNumber(winningNumber) {
