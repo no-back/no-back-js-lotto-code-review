@@ -12,7 +12,6 @@ describe("구매 금액 입력", () => {
 
   it("입력된 금액이 1000원 미만의 금액이 입력된 경우 클릭하더라도 로또를 구매할 수 없다.", () => {
     const purchaseAmount = Math.floor(Math.random() * 1000);
-    console.log(purchaseAmount);
     cy.get("[data-purchase-form='input']").type(purchaseAmount);
     cy.get("[data-purchase-form='button']").click();
     cy.get("[data-purchased-lotto='section']").should("have.css", "display", "none");
