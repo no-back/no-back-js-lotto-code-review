@@ -8,11 +8,11 @@ import {
 
 export default class LottoTicket {
   constructor() {
-    this.lottoNumberList = this.createLottoNumbers().sort((a, b) => a - b);
+    this.lottoNumberList = this.createLottoNumberList().sort((a, b) => a - b);
     this.totalMatchCount = 0;
   }
 
-  createLottoNumbers(array = []) {
+  createLottoNumberList(array = []) {
     const number = getRandomNumber(LOTTO_MIN_NUMBER, LOTTO_MAX_NUMBER);
     if (array.length >= LOTTO_NUMBERS_LENGTH) return array;
 
@@ -20,20 +20,20 @@ export default class LottoTicket {
       array.push(number);
     }
 
-    return this.createLottoNumbers(array);
+    return this.createLottoNumberList(array);
   }
 
-  setTotalMatchCount({ winningNumbers, bonusNumber }) {
-    const totalMatchCount = this.getWinningNumbersMatchCount(winningNumbers);
+  setTotalMatchCount({ winningNumberList, bonusNumber }) {
+    const totalMatchCount = this.getWinningNumberListMatchCount(winningNumberList);
     this.totalMatchCount =
       totalMatchCount === BONUS_CHECK_REQUIRED_COUNT
         ? totalMatchCount + this.getBonusNumberMatchCount(bonusNumber)
         : totalMatchCount;
   }
 
-  getWinningNumbersMatchCount(winningNumbers) {
+  getWinningNumberListMatchCount(winningNumberList) {
     return this.lottoNumberList.reduce(
-      (acc, num) => acc + winningNumbers.includes(num),
+      (acc, num) => acc + winningNumberList.includes(num),
       0
     );
   }

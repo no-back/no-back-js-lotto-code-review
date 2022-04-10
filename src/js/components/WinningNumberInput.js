@@ -41,15 +41,15 @@ export default class WinningNumberInput {
 
     if (e.target.type != "number") return;
 
-    const { winningNumbers, bonusNumber } = {
-      winningNumbers: [
+    const { winningNumberList, bonusNumber } = {
+      winningNumberList: [
         ...e.currentTarget.querySelectorAll(".winning-number"),
       ].map(($input) => $input.value),
       bonusNumber: e.currentTarget.querySelector(".bonus-number").value,
     };
 
     const { isFulfilled, checkMessage } = this.validateWinningNumber(
-      [...winningNumbers, bonusNumber].filter((v) => v !== "").map((v) => +v)
+      [...winningNumberList, bonusNumber].filter((v) => v !== "").map((v) => +v)
     );
     this.setState({ isFulfilled, checkMessage });
 
@@ -57,7 +57,7 @@ export default class WinningNumberInput {
 
     this.setState({
       winningNumber: {
-        winningNumbers: winningNumbers.map((v) => Number(v)),
+        winningNumberList: winningNumberList.map((v) => Number(v)),
         bonusNumber: +bonusNumber,
       },
     });

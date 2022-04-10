@@ -5,11 +5,11 @@ import {
 } from "../utils/constants.js";
 import { $, clearInputValue } from "../utils/DOM.js";
 export default class PurchaseAmountInput {
-  constructor({ createLottoTickets }) {
+  constructor({ createLottoTicketList }) {
     this.$purchaseForm = $(".purchase-form");
     this.$purchaseInput = $(".purchase-form__input");
     this.$purchaseButton = $(".purchase-form__button");
-    this.createLottoTickets = createLottoTickets;
+    this.createLottoTicketList = createLottoTicketList;
     this.initEventListers();
   }
 
@@ -37,7 +37,7 @@ export default class PurchaseAmountInput {
       alert(ALERT_MESSAGE.PURCHASE_AMOUNT_HAS_CHANGE(change));
     }
 
-    this.createLottoTickets((purchaseAmount - change) / LOTTO_PRICE);
+    this.createLottoTicketList((purchaseAmount - change) / LOTTO_PRICE);
   }
 
   validateAmount(purchaseAmount) {

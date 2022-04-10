@@ -6,11 +6,11 @@ import ResultModal from "./ResultModal.js";
 
 export default class App {
   constructor() {
-    this.lottoTickets = [];
+    this.lottoTicketList = [];
     this.winningNumber = {};
 
     this.purchaseAmountInput = new PurchaseAmountInput({
-      createLottoTickets: this.createLottoTickets.bind(this),
+      createLottoTicketList: this.createLottoTicketList.bind(this),
     });
     this.winningNumberInput = new WinningNumberInput({
       isVisible: false,
@@ -19,7 +19,7 @@ export default class App {
     });
     this.resultModal = new ResultModal({
       isVisible: false,
-      lottoTickets: this.lottoTickets,
+      lottoTicketList: this.lottoTicketList,
       winningNumber: this.winningNumber,
       onRestart: this.onRestart.bind(this),
     });
@@ -27,18 +27,18 @@ export default class App {
 
   showPurchasedLotto() {
     this.purchasedLotto = new PurchasedLotto({
-      lottoTickets: this.lottoTickets,
+      lottoTicketList: this.lottoTicketList,
     });
   }
 
-  setState({ lottoTickets, winningNumber }) {
-    if (lottoTickets) {
-      this.lottoTickets = lottoTickets;
+  setState({ lottoTicketList, winningNumber }) {
+    if (lottoTicketList) {
+      this.lottoTicketList = lottoTicketList;
       this.purchasedLotto.changeStateAndView({
-        lottoTickets: this.lottoTickets,
+        lottoTicketList: this.lottoTicketList,
       });
-      this.winningNumberInput.setState({ isVisible: lottoTickets.length > 0 });
-      this.resultModal.changeStateAndView({ lottoTickets: this.lottoTickets });
+      this.winningNumberInput.setState({ isVisible: lottoTicketList.length > 0 });
+      this.resultModal.changeStateAndView({ lottoTicketList: this.lottoTicketList });
     }
     if (winningNumber) {
       this.winningNumber = winningNumber;
@@ -48,10 +48,10 @@ export default class App {
     }
   }
 
-  createLottoTickets(countOfLotto) {
+  createLottoTicketList(countOfLotto) {
     this.showPurchasedLotto();
     this.setState({
-      lottoTickets: Array(countOfLotto)
+      lottoTicketList: Array(countOfLotto)
         .fill()
         .map(() => new LottoTicket()),
     });
@@ -66,7 +66,7 @@ export default class App {
   }
 
   onRestart() {
-    this.setState({ lottoTickets: [], winningNumber: {} });
+    this.setState({ lottoTicketList: [], winningNumber: {} });
     this.purchaseAmountInput.reset();
   }
 }

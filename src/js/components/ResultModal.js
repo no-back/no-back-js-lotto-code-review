@@ -9,7 +9,7 @@ import {
 import { $ } from "../utils/DOM.js";
 
 export default class ResultModal {
-  constructor({ isVisible, lottoTickets, winningNumber, onRestart }) {
+  constructor({ isVisible, lottoTicketList, winningNumber, onRestart }) {
     this.$modal = $(".modal");
     this.$modalClose = $(".modal-close");
     this.$resultTable = $(".result-table");
@@ -18,7 +18,7 @@ export default class ResultModal {
     this.$resetButton = $(".reset-button");
 
     this.isVisible = isVisible;
-    this.lottoTickets = lottoTickets;
+    this.lottoTicketList = lottoTicketList;
     this.winningNumber = winningNumber;
 
     this.onRestart = onRestart;
@@ -54,24 +54,24 @@ export default class ResultModal {
     this.changeStateAndView({ isVisible: false });
   }
 
-  changeStateAndView({ isVisible, lottoTickets, winningNumber }) {
-    this.setState({ isVisible, lottoTickets, winningNumber });
+  changeStateAndView({ isVisible, lottoTicketList, winningNumber }) {
+    this.setState({ isVisible, lottoTicketList, winningNumber });
     this.setTotalMatchCountList();
     this.render();
   }
 
-  setState({ isVisible, lottoTickets, winningNumber }) {
+  setState({ isVisible, lottoTicketList, winningNumber }) {
     this.isVisible = isVisible ?? this.isVisible;
-    this.lottoTickets = lottoTickets ?? this.lottoTickets;
+    this.lottoTicketList = lottoTicketList ?? this.lottoTicketList;
     this.winningNumber = winningNumber ?? this.winningNumber;
   }
 
   getMeaningProfitRate() {
-    const profit = this.lottoTickets.reduce(
+    const profit = this.lottoTicketList.reduce(
       (acc, lottoTicket) => acc + GET_PRIZE(lottoTicket.totalMatchCount),
       0
     );
-    const loss = this.lottoTickets.length * LOTTO_PRICE;
+    const loss = this.lottoTicketList.length * LOTTO_PRICE;
     const profitRate = getRealProfitRate(profit, loss);
     return profitRate % 1 !== 0
       ? +profitRate.toFixed(YIELD_DECIMAL_POINT)
@@ -80,10 +80,10 @@ export default class ResultModal {
 
   setTotalMatchCountList() {
     if (
-      this.lottoTickets.length > 0 &&
+      this.lottoTicketList.length > 0 &&
       Object.keys(this.winningNumber).length > 0
     ) {
-      this.lottoTickets.forEach((lottoTicket) =>
+      this.lottoTicketList.forEach((lottoTicket) =>
         lottoTicket.setTotalMatchCount(this.winningNumber)
       );
     }
@@ -95,7 +95,7 @@ export default class ResultModal {
       return this.createTableRowHTML({
         DESCRIPTION,
         PRIZE,
-        countOfWinningLotto: this.lottoTickets.filter(
+        countOfWinningLotto: this.lottoTicketList.filter(
           (lottoTicket) => lottoTicket.totalMatchCount === +key
         ).length,
       });
